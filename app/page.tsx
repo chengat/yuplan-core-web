@@ -41,21 +41,18 @@ export default function HomePage() {
             <span className="text-2xl font-bold text-primary">YUPlan</span>
           </Link>
           <p className="text-sm text-muted-foreground hidden md:block">Course selection, de-cluttered.</p>
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <Button variant="ghost" size="sm">
               Login
             </Button>
             <Button size="sm">Sign Up</Button>
-          </div>
+          </div> */}
         </div>
       </header>
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-4xl mx-auto text-center space-y-6">
-          <Badge variant="secondary" className="mb-2">
-            Winter 2025 Registration Open
-          </Badge>
           <h1 className="text-4xl md:text-6xl font-bold text-balance leading-tight">Plan your perfect semester</h1>
           <p className="text-lg md:text-xl text-muted-foreground text-pretty max-w-2xl mx-auto">
             Browse courses, compare sections, and build your schedule with ease. No more confusion, just clarity.
@@ -66,7 +63,7 @@ export default function HomePage() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search for courses, subjects, or professors..."
+              placeholder="Search for courses..."
               className="pl-12 h-14 text-base bg-card shadow-sm"
             />
           </div>
@@ -137,7 +134,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12">Everything you need to plan your courses</h2>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             <div className="text-center space-y-3">
               <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
                 <Search className="h-6 w-6 text-primary" />
@@ -145,16 +142,6 @@ export default function HomePage() {
               <h3 className="font-bold text-lg">Smart Search</h3>
               <p className="text-sm text-muted-foreground">
                 Find courses by code, title, instructor, or department with intelligent filtering
-              </p>
-            </div>
-
-            <div className="text-center space-y-3">
-              <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
-                <Clock className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-bold text-lg">Schedule Builder</h3>
-              <p className="text-sm text-muted-foreground">
-                Visualize your timetable and avoid conflicts with our interactive planner
               </p>
             </div>
 
