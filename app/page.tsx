@@ -23,7 +23,9 @@ export default function HomePage() {
     async function fetchCourses() {
       try {
         const allCourses = await coursesApi.getAllCourses()
-        const randomCourses = [...allCourses].sort(() => Math.random() - 0.5).slice(0, 4)
+        const randomCourses = [...allCourses]
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 4)
         setTopCourses(randomCourses)
       } catch (error) {
         console.error("Failed to fetch courses:", error)
@@ -68,7 +70,9 @@ export default function HomePage() {
             <GraduationCap className="h-7 w-7 text-primary" />
             <span className="text-2xl font-bold text-primary">YUPlan</span>
           </Link>
-          <p className="text-sm text-muted-foreground hidden md:block">Course selection, de-cluttered.</p>
+          <p className="text-sm text-muted-foreground hidden md:block">
+            Course selection, de-cluttered.
+          </p>
           {/* <div className="flex items-center gap-3">
             <Button variant="ghost" size="sm">
               Login
@@ -81,9 +85,12 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-4xl mx-auto text-center space-y-6">
-          <h1 className="text-4xl md:text-6xl font-bold text-balance leading-tight">Plan your perfect semester</h1>
+          <h1 className="text-4xl md:text-6xl font-bold text-balance leading-tight">
+            Plan your perfect semester
+          </h1>
           <p className="text-lg md:text-xl text-muted-foreground text-pretty max-w-2xl mx-auto">
-            Browse courses, compare sections, and build your schedule with ease. No more confusion, just clarity.
+            Browse courses, compare sections, and build your schedule with ease.
+            No more confusion, just clarity.
           </p>
 
           {/* Search Bar */}
@@ -105,7 +112,7 @@ export default function HomePage() {
                 }, 200)
               }}
             />
-            
+
             {/* Search Results Dropdown */}
             {showResults && isFocused && (
               <Card className="absolute top-full mt-2 w-full max-h-[400px] overflow-y-auto z-50 shadow-xl border-border bg-card text-left">
@@ -122,16 +129,22 @@ export default function HomePage() {
                     {searchResults.map((course) => (
                       <Link
                         key={course.code}
-                        href={`/course/${course.code.toLowerCase().replace(/\s+/g, "-")}`}
+                        href={`/course/${course.id}`}
                         className="block p-4 hover:bg-muted/70 transition-colors text-left"
                         onMouseDown={(e) => e.preventDefault()}
                       >
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex-1 min-w-0 text-left">
-                            <h4 className="font-semibold text-foreground mb-1 text-left">{course.code}</h4>
-                            <p className="text-sm text-muted-foreground line-clamp-1 text-left">{course.name}</p>
+                            <h4 className="font-semibold text-foreground mb-1 text-left">
+                              {course.code}
+                            </h4>
+                            <p className="text-sm text-muted-foreground line-clamp-1 text-left">
+                              {course.name}
+                            </p>
                           </div>
-                          <Badge variant="secondary" className="shrink-0">{course.credits} credits</Badge>
+                          <Badge variant="secondary" className="shrink-0">
+                            {course.credits} credits
+                          </Badge>
                         </div>
                       </Link>
                     ))}
@@ -140,7 +153,6 @@ export default function HomePage() {
               </Card>
             )}
           </div>
-          
         </div>
       </section>
 
@@ -150,30 +162,40 @@ export default function HomePage() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h2 className="text-3xl font-bold mb-2">Trending Courses</h2>
-              <p className="text-muted-foreground">Most popular courses this semester</p>
+              <p className="text-muted-foreground">
+                Most popular courses this semester
+              </p>
             </div>
             <Button variant="outline">View All</Button>
           </div>
 
           {isLoading ? (
-            <div className="text-center py-12 text-muted-foreground">Loading courses...</div>
+            <div className="text-center py-12 text-muted-foreground">
+              Loading courses...
+            </div>
           ) : error ? (
             <div className="text-center py-12 text-destructive">{error}</div>
           ) : topCourses.length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">No courses available.</div>
+            <div className="text-center py-12 text-muted-foreground">
+              No courses available.
+            </div>
           ) : (
             <div className="grid md:grid-cols-2 gap-4">
               {topCourses.map((course) => (
-                <Link key={course.code} href={`/course/${course.code.toLowerCase().replace(/\s+/g, "-")}`}>
+                <Link key={course.code} href={`/course/${course.id}`}>
                   <Card className="p-6 hover:shadow-lg transition-all hover:border-primary/50 cursor-pointer group">
                     <div className="flex items-start justify-between mb-3">
                       <div>
                         <h3 className="font-bold text-xl mb-1 group-hover:text-primary transition-colors">
                           {course.code}
                         </h3>
-                        <p className="text-sm text-foreground font-medium">{course.name}</p>
+                        <p className="text-sm text-foreground font-medium">
+                          {course.name}
+                        </p>
                       </div>
-                      <Badge variant="secondary">{course.credits} credits</Badge>
+                      <Badge variant="secondary">
+                        {course.credits} credits
+                      </Badge>
                     </div>
 
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
@@ -184,7 +206,9 @@ export default function HomePage() {
                     </div>
 
                     <div className="flex items-center justify-between pt-3 border-t border-border">
-                      <p className="text-sm text-muted-foreground">{course.instructor}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {course.instructor}
+                      </p>
                       <Button
                         variant="ghost"
                         size="sm"
@@ -205,7 +229,9 @@ export default function HomePage() {
       {/* Features Section */}
       <section className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Everything you need to plan your courses</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Everything you need to plan your courses
+          </h2>
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="text-center space-y-3">
@@ -214,7 +240,8 @@ export default function HomePage() {
               </div>
               <h3 className="font-bold text-lg">Smart Search</h3>
               <p className="text-sm text-muted-foreground">
-                Find courses by code, title, instructor, or department with intelligent filtering
+                Find courses by code, title, instructor, or department with
+                intelligent filtering
               </p>
             </div>
 
@@ -224,7 +251,8 @@ export default function HomePage() {
               </div>
               <h3 className="font-bold text-lg">Course Details</h3>
               <p className="text-sm text-muted-foreground">
-                Get complete information on prerequisites, descriptions, and section availability
+                Get complete information on prerequisites, descriptions, and
+                section availability
               </p>
             </div>
           </div>
@@ -240,13 +268,22 @@ export default function HomePage() {
               <span className="text-xl font-bold text-primary">YUPlan</span>
             </div>
             <nav className="flex items-center gap-6 text-sm">
-              <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
                 Home
               </Link>
-              <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/about"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
                 About
               </Link>
-              <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                href="/contact"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
                 Contact
               </Link>
             </nav>
