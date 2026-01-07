@@ -207,7 +207,18 @@ export default function CoursePage() {
                                       }`}
                                   </span>
                                 </div>
-                                {times.length > 0 && (
+                                {times.length === 0 ? (
+                                  <p className="text-sm font-bold">Cancelled</p>
+                                ) : times.length > 0 &&
+                                  (!times[0].time ||
+                                    times[0].time === "0:00" ||
+                                    (times[0].time === "0:00" &&
+                                      times[0].duration === "0" &&
+                                      !times[0].day)) ? (
+                                  <p className="text-sm font-bold">
+                                    No Scheduled Times
+                                  </p>
+                                ) : (
                                   <>
                                     <p className="text-sm font-medium">
                                       {getDayName(times[0].day)}:{" "}
