@@ -1,67 +1,67 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Search, BookOpen } from "lucide-react";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { coursesApi, type Course } from "@/lib/api/courses";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Search, BookOpen } from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import { coursesApi, type Course } from "@/lib/api/courses"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 
 export default function HomePage() {
-  const [topCourses, setTopCourses] = useState<Course[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<Course[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
+  const [topCourses, setTopCourses] = useState<Course[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [searchResults, setSearchResults] = useState<Course[]>([])
+  const [isSearching, setIsSearching] = useState(false)
+  const [showResults, setShowResults] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
     async function fetchCourses() {
       try {
-        const allCourses = await coursesApi.getAllCourses();
+        const allCourses = await coursesApi.getAllCourses()
         const randomCourses = [...allCourses]
           .sort(() => Math.random() - 0.5)
-          .slice(0, 4);
-        setTopCourses(randomCourses);
+          .slice(0, 4)
+        setTopCourses(randomCourses)
       } catch (error) {
-        console.error("Failed to fetch courses:", error);
-        setError("Failed to load courses. Please try again later.");
+        console.error("Failed to fetch courses:", error)
+        setError("Failed to load courses. Please try again later.")
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     }
 
-    fetchCourses();
-  }, []);
+    fetchCourses()
+  }, [])
 
   useEffect(() => {
     const delaySearch = setTimeout(async () => {
       if (searchQuery.trim().length > 0) {
-        setIsSearching(true);
-        setShowResults(true);
+        setIsSearching(true)
+        setShowResults(true)
         try {
-          const results = await coursesApi.searchCourses(searchQuery);
-          setSearchResults(results);
+          const results = await coursesApi.searchCourses(searchQuery)
+          setSearchResults(results)
         } catch (error) {
-          console.error("Search failed:", error);
-          setSearchResults([]);
+          console.error("Search failed:", error)
+          setSearchResults([])
         } finally {
-          setIsSearching(false);
+          setIsSearching(false)
         }
       } else {
-        setSearchResults([]);
-        setShowResults(false);
+        setSearchResults([])
+        setShowResults(false)
       }
-    }, 300); // 300ms debounce
+    }, 300) // 300ms debounce
 
-    return () => clearTimeout(delaySearch);
-  }, [searchQuery]);
+    return () => clearTimeout(delaySearch)
+  }, [searchQuery])
 
   return (
     <div className="min-h-screen bg-background">
@@ -92,9 +92,9 @@ export default function HomePage() {
               onFocus={() => setIsFocused(true)}
               onBlur={() => {
                 setTimeout(() => {
-                  setIsFocused(false);
-                  setShowResults(false);
-                }, 200);
+                  setIsFocused(false)
+                  setShowResults(false)
+                }, 200)
               }}
             />
 
@@ -113,7 +113,7 @@ export default function HomePage() {
                   <div className="divide-y divide-border">
                     {searchResults.map((course) => (
                       <Link
-                        key={course.code}
+                        key={course.id}
                         href={`/course/${course.id}`}
                         className="block p-4 hover:bg-muted/70 transition-colors text-left"
                         onMouseDown={(e) => e.preventDefault()}
@@ -246,5 +246,5 @@ export default function HomePage() {
 
       <Footer />
     </div>
-  );
+  )
 }
