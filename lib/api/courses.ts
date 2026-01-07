@@ -22,33 +22,39 @@ const FACULTY_MAP: Record<string, string> = {
 }
 
 const TYPE_MAP: Record<string, string> = {
-  BLEN: "Blended learning",
-  CLIN: "Clinical",
-  CORS: "Correspondence",
-  DIRD: "Directed reading",
-  DISS: "Dissertation",
-  FDEX: "Field experience",
-  FIEL: "Field trip",
-  HYFX: "Hyflex",
-  IDS: "Individual directed study",
-  INSP: "Internship",
-  ISTY: "Independent studies",
-  LAB: "Laboratory",
-  LECT: "Lecture",
-  LGCL: "Language classes",
-  ONCA: "Online - Campus Assessment",
-  ONLN: "Online learning",
-  PERF: "Performance",
-  PRAC: "Practicum",
-  REEV: "Research evaluation",
-  REMT: "Remote",
-  RESP: "Research paper",
-  REVP: "Review paper",
-  SEMR: "Seminar",
-  STDO: "Studio",
-  THES: "Thesis",
-  TUTR: "Tutorial",
-  WKSP: "Workshop",
+  BLEN: "BLEN - Blended learning",
+  CLIN: "CLIN - Clinical",
+  CORS: "CORS - Correspondence",
+  DIRD: "DIRD - Directed reading",
+  DISS: "DISS - Dissertation",
+  FDEX: "FDEX - Field experience",
+  FIEL: "FIEL - Field trip",
+  HYFX: "HYFX - Hyflex",
+  IDS: "IDS - Individual directed study",
+  INSP: "INSP - Internship",
+  ISTY: "ISTY - Independent studies",
+  LAB: "LAB - Laboratory",
+  LECT: "LECT - Lecture",
+  LGCL: "LGCL - Language classes",
+  ONCA: "ONCA - Online - Campus Assessment",
+  ONLN: "ONLN - Online learning",
+  PERF: "PERF - Performance",
+  PRAC: "PRAC - Practicum",
+  REEV: "REEV - Research evaluation",
+  REMT: "REMT - Remote",
+  RESP: "RESP - Research paper",
+  REVP: "REVP - Review paper",
+  SEMR: "SEMR - Seminar",
+  STDO: "STDO - Studio",
+  THES: "THES - Thesis",
+  TUTR: "TUTR - Tutorial",
+  WKSP: "WKSP - Workshop",
+}
+
+const SEM_MAP: Record<string, string> = {
+  F: "Fall (F)",
+  W: "Winter (W)",
+  Y: "Year (Y)",
 }
 
 export const getDayName = (dayCode: string): string => {
@@ -61,6 +67,10 @@ export const getFacultyName = (facultyCode: string): string => {
 
 export const getTypeName = (typeCode: string): string => {
   return TYPE_MAP[typeCode.toUpperCase()] || typeCode
+}
+
+export const getSemesterName = (semCode: string): string => {
+  return SEM_MAP[semCode.toUpperCase()] || semCode
 }
 
 export const calculateEndTime = (
@@ -104,16 +114,10 @@ export interface Course {
   name: string
   instructor: string
   faculty: string
-  type: string
+  term: string
   students: number
   sections: number
   credits: number
-}
-
-export interface Section {
-  id: string
-  course_id: string
-  letter: string
 }
 
 export interface TimeSlot {
@@ -122,6 +126,21 @@ export interface TimeSlot {
   duration: string
   campus: string
   room: string
+}
+
+export interface Activity {
+  id: string
+  course_type: string
+  section_id: string
+  catalog_number: string
+  times: string // JSON string that needs to be parsed
+}
+
+export interface Section {
+  id: string
+  course_id: string
+  letter: string
+  activities?: Activity[]
 }
 
 export interface Instructor {
