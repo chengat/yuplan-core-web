@@ -53,31 +53,6 @@ export default function CoursePage() {
           instructorsMap[instructor.section_id] = instructor;
         });
         setInstructorsBySection(instructorsMap);
-
-        // Fetch labs and tutorials for each section
-        const labsPromises = sectionsData.map((section) =>
-          coursesApi.getLabsBySectionId(section.id).catch(() => [])
-        );
-        const tutorialsPromises = sectionsData.map((section) =>
-          coursesApi.getTutorialsBySectionId(section.id).catch(() => [])
-        );
-
-        const [labsResults, tutorialsResults] = await Promise.all([
-          Promise.all(labsPromises),
-          Promise.all(tutorialsPromises),
-        ]);
-
-        // Map labs and tutorials to their sections
-        const labsMap: Record<string, Lab[]> = {};
-        const tutorialsMap: Record<string, Tutorial[]> = {};
-
-        sectionsData.forEach((section, index) => {
-          labsMap[section.id] = labsResults[index];
-          tutorialsMap[section.id] = tutorialsResults[index];
-        });
-
-        setLabsBySection(labsMap);
-        setTutorialsBySection(tutorialsMap);
       } catch (err) {
         console.error("Failed to fetch course data:", err);
         setError("Failed to load course. Please try again later.");
