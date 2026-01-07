@@ -154,10 +154,14 @@ export default function CoursePage() {
                         <h3 className="text-2xl font-bold">
                           Section {section.letter}
                         </h3>
-                        {instructorsBySection[section.id] && (
+                        {instructorsBySection[section.id] ? (
                           <p className="text-sm text-muted-foreground">
                             {instructorsBySection[section.id].first_name}{" "}
                             {instructorsBySection[section.id].last_name}
+                          </p>
+                        ) : (
+                          <p className="text-sm text-destructive">
+                            No instructor info available
                           </p>
                         )}
                       </div>
