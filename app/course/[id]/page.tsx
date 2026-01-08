@@ -1,7 +1,7 @@
 "use client"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, Users, BookOpen } from "lucide-react"
+import { Calendar, Users, BookOpen, Copy, Check } from "lucide-react"
 import Link from "next/link"
 import {
   coursesApi,
@@ -31,6 +31,13 @@ export default function CoursePage() {
   const [instructorsBySection, setInstructorsBySection] = useState<
     Record<string, Instructor>
   >({})
+  const [copiedCatalogue, setCopiedCatalogue] = useState<string | null>(null)
+
+  const handleCopyCatalogue = (catalogueNumber: string) => {
+    navigator.clipboard.writeText(catalogueNumber)
+    setCopiedCatalogue(catalogueNumber)
+    setTimeout(() => setCopiedCatalogue(null), 2000)
+  }
 
   useEffect(() => {
     async function fetchCourseData() {
@@ -230,6 +237,27 @@ export default function CoursePage() {
                                             .indexOf(activity) + 1
                                         }`}
                                     </span>
+                                    {activity.catalog_number && (
+                                      <button
+                                        onClick={() =>
+                                          handleCopyCatalogue(
+                                            activity.catalog_number
+                                          )
+                                        }
+                                        className="flex items-center gap-1 px-2 py-1 rounded bg-primary/10 hover:bg-primary/20 transition-colors group ml-auto"
+                                        title="Click to copy catalogue number"
+                                      >
+                                        <span className="text-xs font-mono font-medium text-primary">
+                                          {activity.catalog_number}
+                                        </span>
+                                        {copiedCatalogue ===
+                                        activity.catalog_number ? (
+                                          <Check className="h-3 w-3 text-primary" />
+                                        ) : (
+                                          <Copy className="h-3 w-3 text-primary opacity-60 group-hover:opacity-100" />
+                                        )}
+                                      </button>
+                                    )}
                                   </div>
                                   {times.length === 0 ? (
                                     <p className="text-sm font-bold">
