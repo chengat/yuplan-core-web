@@ -166,80 +166,97 @@ export default function CoursePage() {
 
                       <div className="space-y-3 mb-4">
                         {section.activities && section.activities.length > 0 ? (
-                          section.activities.map((activity, idx) => {
-                            let times: Array<{
-                              day: string
-                              time: string
-                              duration: string
-                              campus: string
-                              room: string
-                            }> = []
-                            try {
-                              times = JSON.parse(activity.times)
-                            } catch (e) {
-                              times = []
-                            }
+                          [...section.activities]
+                            .sort((a, b) => {
+                              // Lect type comes first
+                              if (
+                                a.course_type === "LECT" &&
+                                b.course_type !== "LECT"
+                              )
+                                return -1
+                              if (
+                                a.course_type !== "LECT" &&
+                                b.course_type === "LECT"
+                              )
+                                return 1
+                              return 0
+                            })
+                            .map((activity, idx) => {
+                              let times: Array<{
+                                day: string
+                                time: string
+                                duration: string
+                                campus: string
+                                room: string
+                              }> = []
+                              try {
+                                times = JSON.parse(activity.times)
+                              } catch (e) {
+                                times = []
+                              }
 
-                            const activityType = getTypeName(
-                              activity.course_type
-                            )
-                            const activityCount = section.activities!.filter(
-                              (a) => a.course_type === activity.course_type
-                            ).length
-                            const isMultiple = activityCount > 1
+                              const activityType = getTypeName(
+                                activity.course_type
+                              )
+                              const activityCount = section.activities!.filter(
+                                (a) => a.course_type === activity.course_type
+                              ).length
+                              const isMultiple = activityCount > 1
 
-                            return (
-                              <div
-                                key={activity.id}
-                                className="bg-muted/50 rounded-lg p-3"
-                              >
-                                <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
-                                  <BookOpen
-                                    className="h-3 w-3"
-                                    aria-hidden="true"
-                                  />
-                                  <span>
-                                    {activityType}
-                                    {isMultiple &&
-                                      ` ${
-                                        section
-                                          .activities!.filter(
-                                            (a) =>
-                                              a.course_type ===
-                                              activity.course_type
-                                          )
-                                          .indexOf(activity) + 1
-                                      }`}
-                                  </span>
+                              return (
+                                <div
+                                  key={activity.id}
+                                  className="bg-muted/50 rounded-lg p-3"
+                                >
+                                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
+                                    <BookOpen
+                                      className="h-3 w-3"
+                                      aria-hidden="true"
+                                    />
+                                    <span>
+                                      {activityType}
+                                      {isMultiple &&
+                                        ` ${
+                                          section
+                                            .activities!.filter(
+                                              (a) =>
+                                                a.course_type ===
+                                                activity.course_type
+                                            )
+                                            .indexOf(activity) + 1
+                                        }`}
+                                    </span>
+                                  </div>
+                                  {times.length === 0 ? (
+                                    <p className="text-sm font-bold">
+                                      Cancelled
+                                    </p>
+                                  ) : times.length > 0 &&
+                                    (!times[0].time ||
+                                      times[0].time === "0:00") ? (
+                                    <p className="text-sm font-bold">
+                                      No Scheduled Times
+                                    </p>
+                                  ) : (
+                                    <>
+                                      <p className="text-sm font-medium">
+                                        {getDayName(times[0].day)}:{" "}
+                                        {formatTime(times[0].time)} -{" "}
+                                        {calculateEndTime(
+                                          times[0].time,
+                                          times[0].duration
+                                        )}
+                                      </p>
+                                      <p className="text-xs text-muted-foreground">
+                                        {[times[0]?.room, times[0]?.campus]
+                                          .filter(Boolean)
+                                          .join(", ")}
+                                      </p>
+                                    </>
+                                  )}
                                 </div>
-                                {times.length === 0 ? (
-                                  <p className="text-sm font-bold">Cancelled</p>
-                                ) : times.length > 0 &&
-                                  (!times[0].time ||
-                                    times[0].time === "0:00") ? (
-                                  <p className="text-sm font-bold">
-                                    No Scheduled Times
-                                  </p>
-                                ) : (
-                                  <>
-                                    <p className="text-sm font-medium">
-                                      {getDayName(times[0].day)}:{" "}
-                                      {formatTime(times[0].time)} -{" "}
-                                      {calculateEndTime(
-                                        times[0].time,
-                                        times[0].duration
-                                      )}
-                                    </p>
-                                    <p className="text-xs text-muted-foreground">
-                                      {[times[0]?.room, times[0]?.campus]
-                                        .filter(Boolean)
-                                        .join(", ")}
-                                    </p>
-                                  </>
-                                )}
-                              </div>
-                            )
-                          })
+                              )
+                            })
                         ) : (
                           <p className="text-xs text-muted-foreground">
                             No activities scheduled
