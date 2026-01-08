@@ -14,6 +14,7 @@ import {
   calculateEndTime,
   formatTime,
   getSemesterName,
+  formatCourseCode,
 } from "@/lib/api/courses"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -285,10 +286,4 @@ function getIDFromParams(params: { id?: string }) {
     throw new Error("Invalid or missing course ID")
   }
   return id
-}
-
-function formatCourseCode(code: string): string {
-  // Insert a space between letters and numbers
-  // E.g., "EECS2030" -> "EECS 2030"
-  return code.replace(/([A-Za-z]+)(\d+)/, "$1 $2")
 }
