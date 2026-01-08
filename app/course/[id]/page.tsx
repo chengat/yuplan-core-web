@@ -91,7 +91,9 @@ export default function CoursePage() {
 
               <div className="flex items-start justify-between mb-6">
                 <div className="flex-1">
-                  <h1 className="text-5xl font-bold mb-3">{course.code}</h1>
+                  <h1 className="text-5xl font-bold mb-3">
+                    {formatCourseCode(course.code)}
+                  </h1>
                   <p className="text-2xl text-muted-foreground mb-4">
                     {course.name}
                   </p>
@@ -283,4 +285,10 @@ function getIDFromParams(params: { id?: string }) {
     throw new Error("Invalid or missing course ID")
   }
   return id
+}
+
+function formatCourseCode(code: string): string {
+  // Insert a space between letters and numbers
+  // E.g., "EECS2030" -> "EECS 2030"
+  return code.replace(/([A-Za-z]+)(\d+)/, "$1 $2")
 }
