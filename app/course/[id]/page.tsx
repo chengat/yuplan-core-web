@@ -100,7 +100,7 @@ export default function CoursePage() {
                   </p>
                 </div>
                 <Badge variant="secondary" className="text-base px-4 py-2">
-                  {course.credits}.0 credit
+                  {course.credits} credit
                   {course.credits === 1 ? "" : "s"}
                 </Badge>
               </div>
