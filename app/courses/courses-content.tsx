@@ -38,7 +38,8 @@ const COURSE_LEVEL_TO_RANGE: Record<string, string> = {
   "2xxx": "2000s",
   "3xxx": "3000s",
   "4xxx": "4000s",
-  "5xxx": "5000s+",
+  "5xxx": "5000s",
+  "6xxx": "6000s",
 }
 
 export default function CoursesContent() {
@@ -74,7 +75,8 @@ export default function CoursesContent() {
     { id: "2xxx", label: "2000s", range: [2000, 2999] },
     { id: "3xxx", label: "3000s", range: [3000, 3999] },
     { id: "4xxx", label: "4000s", range: [4000, 4999] },
-    { id: "5xxx", label: "5000s+", range: [5000, 9999] },
+    { id: "5xxx", label: "5000s", range: [5000, 5999] },
+    { id: "6xxx", label: "6000s", range: [6000, 6999] },
   ]
 
   const toggleCourseLevel = (levelId: string) => {
