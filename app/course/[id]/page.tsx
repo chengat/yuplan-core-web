@@ -70,6 +70,63 @@ export default function CoursePage() {
     return [catalogNumber.trim()]
   }
 
+  const parseDescription = (description: string | undefined): { description: string; prerequisites: string | null } => {
+    if (!description) {
+      return { description: "", prerequisites: null }
+    }
+
+    // Look for "Prerequisite" or "Prerequisites" (case-insensitive)
+    const prerequisiteRegex = /\b(Prerequisite[s]?)\s*:?\s*/i
+    const match = description.search(prerequisiteRegex)
+
+    if (match === -1) {
+      // No prerequisites found, return full description
+      return { description: description.trim(), prerequisites: null }
+    }
+
+    // Split at the prerequisite marker
+    const mainDescription = description.substring(0, match).trim()
+    const prerequisitesText = description.substring(match).trim()
+
+    // Remove the "Prerequisite(s):" prefix from the prerequisites text
+    const cleanedPrerequisites = prerequisitesText.replace(prerequisiteRegex, "").trim()
+
+    return {
+      description: mainDescription,
+      prerequisites: cleanedPrerequisites || null,
+    }
+  }
+
+  const parsePrerequisitesIntoList = (prerequisites: string): string[] => {
+    if (!prerequisites) return []
+
+    // Split by semicolons first (common separator for prerequisites)
+    const items: string[] = []
+    
+    // Handle special sections like "Course credit exclusions:" and "Previously offered as:"
+    const sections = prerequisites.split(/(?=Course credit exclusions:|Previously offered as:)/i)
+    
+    sections.forEach((section) => {
+      const trimmed = section.trim()
+      if (!trimmed) return
+
+      // Check if this is a special section
+      if (trimmed.match(/^(Course credit exclusions|Previously offered as):/i)) {
+        // Add the section header as a separate item
+        const match = trimmed.match(/^(Course credit exclusions|Previously offered as):\s*(.+)/i)
+        if (match) {
+          items.push(`${match[1]}: ${match[2].trim()}`)
+        }
+      } else {
+        // Split by semicolons for regular prerequisites
+        const parts = trimmed.split(';').map(p => p.trim()).filter(p => p)
+        items.push(...parts)
+      }
+    })
+
+    return items.filter(item => item.length > 0)
+  }
+
   const handleCopyCatalog = async (catalogNumber: string) => {
     try {
       // Try modern Clipboard API first
@@ -179,18 +236,41 @@ export default function CoursePage() {
                 </Badge>
               </div>
 
-              <Card className="p-8 bg-muted/30">
-                <p className="text-base text-foreground leading-relaxed">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </p>
-              </Card>
+              {course.description && (() => {
+                const { description, prerequisites } = parseDescription(course.description)
+                return (
+                  <>
+                    {description && (
+                      <Card className="p-8 bg-muted/30">
+                        <p className="text-base text-foreground leading-relaxed whitespace-pre-line">
+                          {description}
+                        </p>
+                      </Card>
+                    )}
+                    {prerequisites && (() => {
+                      const prerequisiteItems = parsePrerequisitesIntoList(prerequisites)
+                      return (
+                        <Card className="p-6 bg-muted/30 mt-4">
+                          <h3 className="text-xl font-bold text-primary mb-1.5">
+                            Prerequisites
+                          </h3>
+                          {prerequisiteItems.length > 0 ? (
+                            <ul className="list-disc list-outside space-y-2 text-base text-foreground leading-relaxed pl-5 -ml-1">
+                              {prerequisiteItems.map((item, index) => (
+                                <li key={index} className="pl-0">{item}</li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p className="text-base text-foreground leading-relaxed whitespace-pre-line">
+                              {prerequisites}
+                            </p>
+                          )}
+                        </Card>
+                      )
+                    })()}
+                  </>
+                )
+              })()}
 
               <div className="flex flex-wrap items-center gap-6 mt-8 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
