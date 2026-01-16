@@ -63,16 +63,16 @@ export default function CoursesContent() {
   const faculties = [
     { id: "all", name: "All Faculties" },
     { id: "lassonde", name: "Lassonde School of Engineering" },
-    { id: "liberal-arts", name: "Faculty of Liberal Arts & Professional Studies" },
-    { id: "science", name: "Faculty of Science" },
-    { id: "health", name: "Faculty of Health" },
-    { id: "education", name: "Faculty of Education" },
+    { id: "liberal-arts", name: "Liberal Arts & Professional Studies" },
+    { id: "science", name: "Science" },
+    { id: "health", name: "Health" },
+    { id: "education", name: "Education" },
     { id: "fine-arts", name: "School of the Arts, Media, Performance & Design" },
     { id: "glendon", name: "Glendon Campus" },
     { id: "osgoode", name: "Osgoode Hall Law School" },
     { id: "schulich", name: "Schulich School of Business" },
-    { id: "environmental-urban", name: "Faculty of Environmental and Urban Change" },
-    { id: "graduate-studies", name: "Faculty of Graduate Studies" },
+    { id: "environmental-urban", name: "Environmental and Urban Change" },
+    { id: "graduate-studies", name: "Graduate Studies" },
   ]
 
   const courseLevels = [
