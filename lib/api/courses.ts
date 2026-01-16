@@ -17,6 +17,7 @@ const FACULTY_MAP: Record<string, string> = {
   GS: "Faculty of Graduate Studies (GS)",
   HH: "Faculty of Health (HH)",
   LE: "Lassonde School of Engineering (LE)",
+  LW: "Osgoode Hall Law School (LW)",
   SB: "Schulich School of Business (SB)",
   SC: "Faculty of Science (SC)",
 }
@@ -175,6 +176,21 @@ interface InstructorsResponse {
   [key: string]: any
 }
 
+export interface PaginatedCoursesResponse {
+  data: Course[]
+  page: number
+  page_size: number
+  total_items: number
+  total_pages: number
+}
+
+export interface PaginatedCoursesParams {
+  page?: number
+  page_size?: number
+  faculty?: string
+  course_code_range?: string
+}
+
 export const coursesApi = {
   async getAllCourses(): Promise<Course[]> {
     const response = await apiClient.get<CoursesResponse | Course[]>("/courses")
@@ -196,9 +212,8 @@ export const coursesApi = {
   },
 
   async searchCourses(query: string): Promise<Course[]> {
-    const response = await apiClient.get<CoursesResponse | Course[]>(
-      `/courses/search?q=${encodeURIComponent(query)}`
-    )
+    const endpoint = `/courses/search?q=${encodeURIComponent(query)}`
+    const response = await apiClient.get<CoursesResponse | Course[]>(endpoint)
 
     if (Array.isArray(response)) {
       return response
@@ -291,5 +306,38 @@ export const coursesApi = {
 
     console.error("Unexpected API response structure:", response)
     throw new Error("Invalid API response structure")
+  },
+
+  async getPaginatedCourses(params: PaginatedCoursesParams = {}): Promise<PaginatedCoursesResponse> {
+    const queryParams = new URLSearchParams()
+    
+    if (params.page !== undefined) {
+      queryParams.append("page", params.page.toString())
+    }
+    if (params.page_size !== undefined) {
+      queryParams.append("page_size", params.page_size.toString())
+    }
+    if (params.faculty) {
+      queryParams.append("faculty", params.faculty)
+    }
+    if (params.course_code_range) {
+      queryParams.append("course_code_range", params.course_code_range)
+    }
+
+    // Add cache-busting timestamp to ensure fresh requests
+    queryParams.append("_t", Date.now().toString())
+
+    const queryString = queryParams.toString()
+    const endpoint = `/courses/paginated?${queryString}`
+    
+    const response = await apiClient.get<PaginatedCoursesResponse>(endpoint)
+    
+    // Ensure the response has the expected structure
+    if (!response || !response.data) {
+      console.error("Unexpected API response structure:", response)
+      throw new Error("Invalid API response structure")
+    }
+    
+    return response
   },
 }

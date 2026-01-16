@@ -155,7 +155,9 @@ export default function HomePage() {
                 Most popular courses this semester
               </p>
             </div>
-            <Button variant="outline">View All</Button>
+            <Link href="/courses">
+              <Button variant="outline">View All</Button>
+            </Link>
           </div>
 
           {isLoading ? (
