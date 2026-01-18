@@ -1,6 +1,7 @@
 import { GraduationCap } from "lucide-react"
 import Link from "next/link"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { Button } from "@/components/ui/button"
 
 interface HeaderProps {
   subtitle?: string
@@ -22,6 +23,11 @@ export function Header({ subtitle }: HeaderProps) {
           </p>
         )}
         <div className="flex items-center gap-4 justify-self-end">
+          <Link href="/courses">
+            <Button variant="outline" className="shadow-md shadow-primary">
+              View All Courses
+            </Button>
+          </Link>
           <ThemeToggle />
         </div>
       </div>
