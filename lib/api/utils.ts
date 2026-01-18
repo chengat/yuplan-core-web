@@ -1,16 +1,27 @@
 import { NextResponse } from "next/server"
 
-export const API_URL = process.env.API_URL || "http://localhost:8080/api/v1"
-
-// Log API_URL in production to debug (remove in production if needed)
-if (process.env.NODE_ENV === 'production') {
-  console.log('API_URL configured:', API_URL ? 'Set' : 'Missing', API_URL)
+// Get API_URL at runtime to ensure it's available in serverless environments
+export function getApiUrl(): string {
+  const apiUrl = process.env.API_URL || "http://localhost:8080/api/v1"
+  
+  // Always log in serverless environments (Netlify sets NODE_ENV to production)
+  console.log('[getApiUrl] Environment check:', {
+    NODE_ENV: process.env.NODE_ENV,
+    API_URL_set: !!process.env.API_URL,
+    API_URL_value: process.env.API_URL ? `${process.env.API_URL.substring(0, 30)}...` : 'NOT SET',
+    final_apiUrl: apiUrl ? `${apiUrl.substring(0, 30)}...` : 'NOT SET'
+  })
+  
+  // Validate API_URL is set in production
+  if (process.env.NODE_ENV === 'production' && !process.env.API_URL) {
+    console.error('WARNING: API_URL environment variable is not set in production!')
+  }
+  
+  return apiUrl
 }
 
-// Validate API_URL is set in production
-if (process.env.NODE_ENV === 'production' && !process.env.API_URL) {
-  console.error('WARNING: API_URL environment variable is not set in production!')
-}
+// Export for backward compatibility, but prefer getApiUrl() for runtime access
+export const API_URL = getApiUrl()
 
 export interface ApiErrorResponse {
   error: string
@@ -23,12 +34,17 @@ export async function fetchFromApi(
   endpoint: string,
   options?: RequestInit
 ): Promise<Response> {
-  if (!API_URL) {
-    throw new Error("API_URL is not configured. Please set the API_URL environment variable.")
+  // Get API_URL at runtime to ensure it's available in serverless environments
+  const apiUrl = getApiUrl()
+  
+  if (!apiUrl) {
+    const error = "API_URL is not configured. Please set the API_URL environment variable."
+    console.error('[fetchFromApi]', error)
+    throw new Error(error)
   }
   
-  const url = `${API_URL}${endpoint}`
-  console.log('Fetching from:', url) // Debug log
+  const url = `${apiUrl}${endpoint}`
+  console.log('[fetchFromApi] Fetching from:', url)
   
   try {
     const response = await fetch(url, {
@@ -36,15 +52,23 @@ export async function fetchFromApi(
       ...options,
     })
 
+    console.log('[fetchFromApi] Response status:', response.status, response.statusText)
+
     if (!response.ok) {
       const errorText = await response.text().catch(() => 'No error body')
-      console.error(`API Error ${response.status}:`, errorText)
+      console.error(`[fetchFromApi] API Error ${response.status}:`, errorText.substring(0, 200))
       throw new Error(`API Error: ${response.status} ${response.statusText}`)
     }
 
     return response
   } catch (error) {
-    console.error('Fetch error:', error)
+    console.error('[fetchFromApi] Fetch error:', error)
+    if (error instanceof Error) {
+      console.error('[fetchFromApi] Error details:', {
+        message: error.message,
+        stack: error.stack?.substring(0, 500)
+      })
+    }
     throw error
   }
 }
