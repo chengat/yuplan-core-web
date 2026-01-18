@@ -487,9 +487,9 @@ export default function CoursesContent() {
                               </div>
                             </div>
                             <Button
-                              variant="ghost"
+                              variant="outline"
                               size="sm"
-                              className="group-hover:bg-primary group-hover:text-primary-foreground shrink-0 w-full sm:w-auto text-xs sm:text-sm"
+                              className="group-hover:bg-primary group-hover:text-primary-foreground shrink-0 w-full sm:w-auto text-xs sm:text-sm shadow-md hover:shadow-lg border-2 sm:border-2"
                             >
                               View Details
                             </Button>

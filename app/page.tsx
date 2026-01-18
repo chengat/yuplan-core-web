@@ -169,7 +169,10 @@ export default function HomePage() {
                 </p>
               </div>
               <Link href="/courses" className="w-full sm:w-auto">
-                <Button variant="outline" className="w-full sm:w-auto">
+                <Button
+                  variant="outline"
+                  className="group-hover:bg-primary group-hover:text-primary-foreground w-full sm:w-auto text-xs sm:text-sm shadow-md hover:shadow-lg border-2 sm:border-2"
+                >
                   View All
                 </Button>
               </Link>
@@ -225,9 +228,9 @@ export default function HomePage() {
                           {course.instructor}
                         </p>
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="sm"
-                          className="group-hover:bg-primary group-hover:text-primary-foreground w-full sm:w-auto text-xs sm:text-sm"
+                          className="group-hover:bg-primary group-hover:text-primary-foreground w-full sm:w-auto text-xs sm:text-sm shadow-md hover:shadow-lg border-2 sm:border-2"
                         >
                           View Details
                         </Button>

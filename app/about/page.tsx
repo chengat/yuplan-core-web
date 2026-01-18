@@ -70,9 +70,9 @@ export default function AboutPage() {
 
                 <div className="flex items-center gap-2 sm:gap-3 pt-3 border-t border-border">
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
-                    className="h-8 w-8 sm:h-9 sm:w-9 p-0"
+                    className="h-8 w-8 sm:h-9 sm:w-9 p-0 shadow-md hover:shadow-lg border-2 sm:border-2"
                     asChild
                   >
                     <Link
@@ -84,9 +84,9 @@ export default function AboutPage() {
                     </Link>
                   </Button>
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
-                    className="h-8 w-8 sm:h-9 sm:w-9 p-0"
+                    className="h-8 w-8 sm:h-9 sm:w-9 p-0 shadow-md hover:shadow-lg border-2 sm:border-2"
                     asChild
                   >
                     <Link
