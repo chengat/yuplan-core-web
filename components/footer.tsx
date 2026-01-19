@@ -1,5 +1,6 @@
 import { GraduationCap } from "lucide-react"
 import Link from "next/link"
+import Logo from "@/public/logo.webp"
 
 export function Footer() {
   return (
@@ -7,16 +8,11 @@ export function Footer() {
       <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            <GraduationCap
-              className="h-5 sm:h-6 w-5 sm:w-6"
-              style={{ color: "#e31837" }}
+            <img
+              src={Logo.src}
+              alt="YUPlan Logo"
+              className="w-auto h-5 md:h-7 object-contain"
             />
-            <span
-              className="text-lg sm:text-xl font-bold"
-              style={{ color: "#e31837" }}
-            >
-              YUPlan
-            </span>
           </div>
           <nav className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm">
             <Link
