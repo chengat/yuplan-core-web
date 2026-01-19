@@ -2,6 +2,7 @@ import { GraduationCap } from "lucide-react"
 import Link from "next/link"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
+import Logo from "@/public/logo.webp"
 
 interface HeaderProps {
   subtitle?: string
@@ -15,16 +16,11 @@ export function Header({ subtitle }: HeaderProps) {
           href="/"
           className="flex items-center gap-1.5 sm:gap-2 justify-self-start shrink-0"
         >
-          <GraduationCap
-            className="h-5 sm:h-6 md:h-7 w-5 sm:w-6 md:w-7"
-            style={{ color: "#e31837" }}
+          <img
+            src={Logo.src}
+            alt="YUPlan Logo"
+            className="w-auto h-6 md:h-8 object-contain"
           />
-          <span
-            className="text-xl sm:text-2xl font-bold"
-            style={{ color: "#e31837" }}
-          >
-            YUPlan
-          </span>
         </Link>
         {subtitle && (
           <p className="text-xs sm:text-sm text-muted-foreground text-center justify-self-center hidden md:block">
