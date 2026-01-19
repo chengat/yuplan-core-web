@@ -11,7 +11,12 @@ import {
 import { Search, BookOpen } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { coursesApi, type Course, formatCourseCode } from "@/lib/api/courses"
+import {
+  coursesApi,
+  type Course,
+  formatCourseCode,
+  getFacultyName,
+} from "@/lib/api/courses"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 
@@ -31,7 +36,7 @@ export default function HomePage() {
         const allCourses = await coursesApi.getAllCourses()
         const randomCourses = [...allCourses]
           .sort(() => Math.random() - 0.5)
-          .slice(0, 4)
+          .slice(0, 6)
         setTopCourses(randomCourses)
       } catch (error) {
         console.error("Failed to fetch courses:", error)
@@ -73,7 +78,7 @@ export default function HomePage() {
 
       <div className="flex-grow flex flex-col">
         {/* Hero Section */}
-        <section className="container mx-auto px-3 sm:px-4 py-8 sm:py-12 md:py-24">
+        <section className="container mx-auto px-3 sm:px-4 pt-8 sm:pt-12 md:pt-20 pb-6 sm:pb-8 md:pb-10">
           <div className="max-w-4xl mx-auto text-center space-y-4 sm:space-y-6">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-balance leading-tight">
               Plan your perfect semester
@@ -156,7 +161,7 @@ export default function HomePage() {
         </section>
 
         {/* Top Courses Section */}
-        <section className="container mx-auto px-3 sm:px-4 py-8 sm:py-12 md:py-16">
+        <section className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 md:py-10">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
               <div>
@@ -190,42 +195,44 @@ export default function HomePage() {
                 No courses available.
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {topCourses.map((course) => (
                   <Link
                     key={course.id}
                     href={`/course/${course.code?.replace(/\s+/g, "").toLowerCase()}`}
                   >
-                    <Card className="p-4 sm:p-6 hover:shadow-lg transition-all hover:border-primary/50 cursor-pointer group flex flex-col h-full">
-                      <div className="flex items-start justify-between mb-3 flex-shrink-0 gap-2 sm:gap-3">
+                    <Card className="p-4 sm:p-5 hover:shadow-lg transition-all hover:border-primary/50 cursor-pointer group flex flex-col h-full">
+                      <div className="flex items-start justify-between mb-2 flex-shrink-0 gap-2 sm:gap-3">
                         <div className="flex-1 min-w-0 pr-2">
-                          <h3 className="font-bold text-lg sm:text-xl mb-1 group-hover:text-primary transition-colors line-clamp-1">
+                          <h3 className="font-bold text-lg sm:text-xl mb-0.5 group-hover:text-primary transition-colors line-clamp-1">
                             {formatCourseCode(course.code)}
                           </h3>
-                          <p className="text-xs sm:text-sm text-foreground font-medium line-clamp-2">
+                          {/* Reserve a consistent 2-line height so meta aligns across cards */}
+                          <p className="text-xs sm:text-sm text-foreground font-medium line-clamp-2 min-h-[2.5rem] sm:min-h-[2.75rem] leading-snug">
                             {course.name}
                           </p>
                         </div>
                         <Badge
                           variant="secondary"
-                          className="flex-shrink-0 text-xs sm:text-sm"
+                          className="flex-shrink-0 text-xs"
                         >
                           {course.credits} credit
                           {course.credits === 1 ? "" : "s"}
                         </Badge>
                       </div>
 
-                      <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-3 flex-shrink-0">
-                        <div className="flex items-center gap-1">
-                          <BookOpen className="h-3 w-3 sm:h-4 sm:w-4" />
-                          <span>
-                            {course.sections} Section
-                            {course.sections === 1 ? "" : "s"}
+                      <div className="flex items-start gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-2 flex-shrink-0">
+                        <div className="flex items-start gap-1 min-w-0">
+                          <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 shrink-0 mt-0.5" />
+                          <span className="min-w-0 leading-snug whitespace-normal break-words">
+                            {course.faculty
+                              ? getFacultyName(course.faculty)
+                              : "Faculty N/A"}
                           </span>
                         </div>
                       </div>
 
-                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-3 border-t border-border mt-auto gap-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-2.5 border-t border-border mt-auto gap-2">
                         <p className="text-xs sm:text-sm text-muted-foreground truncate flex-1 min-w-0">
                           {course.instructor}
                         </p>
@@ -259,7 +266,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="font-bold text-base sm:text-lg">Smart Search</h3>
                 <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                  Find courses by code, title, instructor, or department with
+                  Find courses by code, title, or department with
                   intelligent filtering
                 </p>
               </div>
