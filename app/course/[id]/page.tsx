@@ -347,7 +347,7 @@ export default function CoursePage() {
                   {/* Term selector (right side) */}
                   <div className="flex sm:justify-end">
                     <div
-                      className="flex w-full sm:w-auto items-center gap-2 bg-muted rounded-lg p-1"
+                      className="inline-flex w-fit items-center gap-2 bg-muted rounded-lg p-1"
                       role="tablist"
                       aria-label="Select term"
                     >

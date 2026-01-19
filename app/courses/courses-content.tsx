@@ -204,7 +204,7 @@ export default function CoursesContent() {
 
         if (response && response.data && Array.isArray(response.data)) {
           // Create a new array reference to ensure React detects the change
-          const newCourses = [...response.data]
+          const newCourses = dedupeCoursesByCode([...response.data])
           setCourses(newCourses)
           setTotalPages(response.total_pages)
           setTotalItems(response.total_items)
