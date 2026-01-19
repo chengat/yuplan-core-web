@@ -19,6 +19,7 @@ import {
 } from "@/lib/api/courses"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { BlurredHero } from "@/components/blurred-hero"
 
 export default function HomePage() {
   const [topCourses, setTopCourses] = useState<Course[]>([])
@@ -78,87 +79,101 @@ export default function HomePage() {
 
       <div className="flex-grow flex flex-col">
         {/* Hero Section */}
-        <section className="container mx-auto px-3 sm:px-4 pt-8 sm:pt-12 md:pt-20 pb-6 sm:pb-8 md:pb-10">
-          <div className="max-w-4xl mx-auto text-center space-y-4 sm:space-y-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-balance leading-tight">
-              Plan your perfect semester
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-pretty max-w-2xl mx-auto px-2 sm:px-0">
-              Browse courses, compare sections, and build your schedule with
-              ease. No more confusion, just clarity.
-            </p>
+        <BlurredHero
+          className="pt-8 sm:pt-12 md:pt-20 pb-8 sm:pb-10 md:pb-14"
+          priority
+        >
+          <div className="container mx-auto px-3 sm:px-4">
+            <div className="max-w-4xl mx-auto text-center space-y-4 sm:space-y-6">
+              <div className="flex justify-center">
+                <span className="inline-flex items-center rounded-full bg-primary px-3 py-1 text-xs sm:text-sm font-semibold text-primary-foreground shadow-md">
+                  Fall/Winter 2025-2026
+                </span>
+              </div>
 
-            {/* Search Bar */}
-            <div className="relative max-w-2xl mx-auto pt-2 sm:pt-4 px-2 sm:px-0">
-              <InputGroup className="h-12 sm:h-14 text-sm sm:text-base bg-card shadow-sm">
-                <InputGroupAddon align="inline-start">
-                  <Search
-                    className="h-10 w-10 sm:h-12 sm:w-12 text-muted-foreground"
-                    strokeWidth={2.5}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-balance leading-tight text-white drop-shadow-sm">
+                Plan your perfect semester
+              </h1>
+              <p className="text-base sm:text-lg md:text-xl text-white/85 text-pretty max-w-2xl mx-auto px-2 sm:px-0">
+                Browse courses, compare sections, and build your schedule with
+                ease. No more confusion, just clarity.
+              </p>
+
+              {/* Search Bar */}
+              <div className="relative max-w-2xl mx-auto pt-2 sm:pt-4 px-2 sm:px-0">
+                <InputGroup className="h-12 sm:h-14 text-sm sm:text-base bg-background/90 backdrop-blur-md border-primary/30 shadow-xl shadow-black/20">
+                  <InputGroupAddon
+                    align="inline-start"
+                    className="text-primary"
+                  >
+                    <Search
+                      className="h-10 w-10 sm:h-12 sm:w-12 text-primary/90"
+                      strokeWidth={2.5}
+                    />
+                  </InputGroupAddon>
+                  <InputGroupInput
+                    type="search"
+                    placeholder="Search for courses, subjects, or professors..."
+                    className="text-sm sm:text-base text-foreground"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => {
+                      setTimeout(() => {
+                        setIsFocused(false)
+                        setShowResults(false)
+                      }, 200)
+                    }}
                   />
-                </InputGroupAddon>
-                <InputGroupInput
-                  type="search"
-                  placeholder="Search courses..."
-                  className="text-sm sm:text-base"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => setIsFocused(true)}
-                  onBlur={() => {
-                    setTimeout(() => {
-                      setIsFocused(false)
-                      setShowResults(false)
-                    }, 200)
-                  }}
-                />
-              </InputGroup>
+                </InputGroup>
 
-              {/* Search Results Dropdown */}
-              {showResults && isFocused && (
-                <Card className="absolute top-full mt-2 w-full max-h-[50vh] sm:max-h-[400px] overflow-y-auto z-50 shadow-xl border-border bg-card text-left">
-                  {isSearching ? (
-                    <div className="p-4 sm:p-6 text-muted-foreground">
-                      <div className="animate-pulse">Searching...</div>
-                    </div>
-                  ) : searchResults.length === 0 ? (
-                    <div className="p-4 sm:p-6 text-muted-foreground text-sm sm:text-base">
-                      No courses found for &quot;{searchQuery}&quot;
-                    </div>
-                  ) : (
-                    <div className="divide-y divide-border">
-                      {searchResults.map((course) => (
-                        <Link
-                          key={course.id}
-                          href={`/course/${course.code?.replace(/\s+/g, "").toLowerCase()}`}
-                          className="block p-3 sm:p-4 hover:bg-muted/70 transition-colors text-left"
-                          onMouseDown={(e) => e.preventDefault()}
-                        >
-                          <div className="flex items-start justify-between gap-2 sm:gap-4">
-                            <div className="flex-1 min-w-0 text-left">
-                              <h4 className="font-semibold text-foreground mb-1 text-sm sm:text-base text-left">
-                                {formatCourseCode(course.code)}
-                              </h4>
-                              <p className="text-xs sm:text-sm text-muted-foreground line-clamp-1 text-left">
-                                {course.name}
-                              </p>
+                {/* Search Results Dropdown */}
+                {showResults && isFocused && (
+                  <Card className="absolute top-full mt-2 w-full max-h-[50vh] sm:max-h-[400px] overflow-y-auto z-50 shadow-xl border-border bg-card text-left">
+                    {isSearching ? (
+                      <div className="p-4 sm:p-6 text-muted-foreground">
+                        <div className="animate-pulse">Searching...</div>
+                      </div>
+                    ) : searchResults.length === 0 ? (
+                      <div className="p-4 sm:p-6 text-muted-foreground text-sm sm:text-base">
+                        No courses found for &quot;{searchQuery}&quot;
+                      </div>
+                    ) : (
+                      <div className="divide-y divide-border">
+                        {searchResults.map((course) => (
+                          <Link
+                            key={course.id}
+                            href={`/course/${course.code?.replace(/\s+/g, "").toLowerCase()}`}
+                            className="block p-3 sm:p-4 hover:bg-muted/70 transition-colors text-left"
+                            onMouseDown={(e) => e.preventDefault()}
+                          >
+                            <div className="flex items-start justify-between gap-2 sm:gap-4">
+                              <div className="flex-1 min-w-0 text-left">
+                                <h4 className="font-semibold text-foreground mb-1 text-sm sm:text-base text-left">
+                                  {formatCourseCode(course.code)}
+                                </h4>
+                                <p className="text-xs sm:text-sm text-muted-foreground line-clamp-1 text-left">
+                                  {course.name}
+                                </p>
+                              </div>
+                              <Badge
+                                variant="secondary"
+                                className="shrink-0 text-xs sm:text-sm"
+                              >
+                                {course.credits} credit
+                                {course.credits === 1 ? "" : "s"}
+                              </Badge>
                             </div>
-                            <Badge
-                              variant="secondary"
-                              className="shrink-0 text-xs sm:text-sm"
-                            >
-                              {course.credits} credit
-                              {course.credits === 1 ? "" : "s"}
-                            </Badge>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </Card>
-              )}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </Card>
+                )}
+              </div>
             </div>
           </div>
-        </section>
+        </BlurredHero>
 
         {/* Top Courses Section */}
         <section className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 md:py-10">
