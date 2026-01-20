@@ -30,6 +30,8 @@ export default function HomePage() {
   const [isSearching, setIsSearching] = useState(false)
   const [showResults, setShowResults] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
+  const heroText = "Plan your perfect semester"
+  const [typedHeroText, setTypedHeroText] = useState("")
 
   useEffect(() => {
     async function fetchCourses() {
@@ -49,6 +51,28 @@ export default function HomePage() {
 
     fetchCourses()
   }, [])
+
+  useEffect(() => {
+    // Respect reduced motion preferences.
+    if (typeof window === "undefined") return
+    const media = window.matchMedia?.("(prefers-reduced-motion: reduce)")
+    if (media?.matches) {
+      setTypedHeroText(heroText)
+      return
+    }
+
+    setTypedHeroText("")
+    let i = 0
+    const interval = window.setInterval(() => {
+      i += 1
+      setTypedHeroText(heroText.slice(0, i))
+      if (i >= heroText.length) {
+        window.clearInterval(interval)
+      }
+    }, 45)
+
+    return () => window.clearInterval(interval)
+  }, [heroText])
 
   useEffect(() => {
     const delaySearch = setTimeout(async () => {
@@ -92,7 +116,20 @@ export default function HomePage() {
               </div>
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-balance leading-tight text-white drop-shadow-sm">
-                Plan your perfect semester
+                <span className="sr-only">{heroText}</span>
+                <span aria-hidden className="relative inline-block">
+                  {/* Reserve space to avoid layout shift */}
+                  <span className="invisible">{heroText}</span>
+                  <span className="absolute inset-0">
+                    {typedHeroText}
+                    {typedHeroText.length < heroText.length && (
+                      <span
+                        className="ml-1 inline-block w-[0.08em] h-[1em] bg-white/85 align-[-0.12em] animate-pulse"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </span>
+                </span>
               </h1>
               <p className="text-base sm:text-lg md:text-xl text-white/85 text-pretty max-w-2xl mx-auto px-2 sm:px-0">
                 Browse courses, compare sections, and build your schedule with
