@@ -402,7 +402,7 @@ export default function CoursePage() {
                     No sections available for this course.
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 sm:gap-4">
                     {sections.map((section) => {
                       return (
                         <Card
@@ -495,18 +495,23 @@ export default function CoursePage() {
                                         a.course_type === activity.course_type,
                                     ).length
                                   const isMultiple = activityCount > 1
-                                  
-                                  const catalogNumbers = activity.catalog_number 
-                                    ? parseCatalogNumbers(activity.catalog_number)
+
+                                  const catalogNumbers = activity.catalog_number
+                                    ? parseCatalogNumbers(
+                                        activity.catalog_number,
+                                      )
                                     : []
-                                  const hasSingleCatalog = catalogNumbers.length === 1
+                                  const hasSingleCatalog =
+                                    catalogNumbers.length === 1
 
                                   return (
                                     <div
                                       key={activity.id}
                                       className="bg-muted/50 rounded-lg p-3 sm:p-4"
                                     >
-                                      <div className={`flex items-start gap-2 mb-2 ${hasSingleCatalog ? '' : 'justify-between'}`}>
+                                      <div
+                                        className={`flex items-start gap-2 mb-2 ${hasSingleCatalog ? "" : "justify-between"}`}
+                                      >
                                         <div className="flex items-center gap-2 text-xs text-muted-foreground flex-1 min-w-0">
                                           <BookOpen
                                             className="h-3 w-3 flex-shrink-0"
@@ -549,34 +554,37 @@ export default function CoursePage() {
                                             </button>
                                           )}
                                         </div>
-                                        {!hasSingleCatalog && activity.catalog_number && (
-                                          <div className="flex flex-col sm:grid sm:grid-cols-2 gap-1.5 items-end sm:justify-items-end">
-                                            {catalogNumbers.map((catalogNum, idx) => (
-                                              <button
-                                                key={idx}
-                                                onClick={() =>
-                                                  handleCopyCatalog(
-                                                    catalogNum.trim(),
-                                                  )
-                                                }
-                                                className="flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded bg-primary/10 hover:bg-primary/20 transition-colors group whitespace-nowrap shrink-0 text-xs"
-                                                title="Click to copy catalog number"
-                                                aria-label={`Copy catalog number ${catalogNum}`}
-                                                type="button"
-                                              >
-                                                <span className="text-xs font-mono font-medium text-primary line-clamp-1">
-                                                  {catalogNum.trim()}
-                                                </span>
-                                                {copiedCatalog ===
-                                                catalogNum.trim() ? (
-                                                  <Check className="h-3 w-3 text-primary flex-shrink-0" />
-                                                ) : (
-                                                  <Copy className="h-3 w-3 text-primary opacity-60 group-hover:opacity-100 flex-shrink-0" />
-                                                )}
-                                              </button>
-                                            ))}
-                                          </div>
-                                        )}
+                                        {!hasSingleCatalog &&
+                                          activity.catalog_number && (
+                                            <div className="flex flex-col sm:grid sm:grid-cols-2 gap-1.5 items-end sm:justify-items-end">
+                                              {catalogNumbers.map(
+                                                (catalogNum, idx) => (
+                                                  <button
+                                                    key={idx}
+                                                    onClick={() =>
+                                                      handleCopyCatalog(
+                                                        catalogNum.trim(),
+                                                      )
+                                                    }
+                                                    className="flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded bg-primary/10 hover:bg-primary/20 transition-colors group whitespace-nowrap shrink-0 text-xs"
+                                                    title="Click to copy catalog number"
+                                                    aria-label={`Copy catalog number ${catalogNum}`}
+                                                    type="button"
+                                                  >
+                                                    <span className="text-xs font-mono font-medium text-primary line-clamp-1">
+                                                      {catalogNum.trim()}
+                                                    </span>
+                                                    {copiedCatalog ===
+                                                    catalogNum.trim() ? (
+                                                      <Check className="h-3 w-3 text-primary flex-shrink-0" />
+                                                    ) : (
+                                                      <Copy className="h-3 w-3 text-primary opacity-60 group-hover:opacity-100 flex-shrink-0" />
+                                                    )}
+                                                  </button>
+                                                ),
+                                              )}
+                                            </div>
+                                          )}
                                       </div>
                                       {times.length === 0 ? (
                                         <p className="text-xs sm:text-sm font-bold">
