@@ -318,9 +318,7 @@ export default function CoursePage() {
                                   {prerequisiteItems.length > 0 ? (
                                     <ul className="list-disc list-outside space-y-2 text-sm sm:text-base text-foreground leading-relaxed pl-6 sm:pl-7">
                                       {prerequisiteItems.map((item, index) => (
-                                        <li key={index} className="pl-0">
-                                          {item}
-                                        </li>
+                                        <li key={index}>{item}</li>
                                       ))}
                                     </ul>
                                   ) : (
@@ -404,25 +402,12 @@ export default function CoursePage() {
                     No sections available for this course.
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-4">
                     {sections.map((section) => {
-                      // Check if any activity has multiple catalog numbers
-                      const hasMultipleCatalogs =
-                        section.activities?.some(
-                          (activity) =>
-                            activity.catalog_number &&
-                            parseCatalogNumbers(activity.catalog_number)
-                              .length > 1,
-                        ) || false
-
                       return (
                         <Card
                           key={section.id}
-                          className={`p-4 sm:p-6 hover:shadow-lg transition-all hover:border-primary/50 ${
-                            hasMultipleCatalogs
-                              ? "sm:col-span-2 lg:col-span-2"
-                              : ""
-                          }`}
+                          className="w-full p-4 sm:p-6 hover:shadow-lg transition-all hover:border-primary/50"
                         >
                           <div className="mb-4">
                             <h3 className="text-xl sm:text-2xl font-bold">
@@ -517,7 +502,7 @@ export default function CoursePage() {
                                       className="bg-muted/50 rounded-lg p-3 sm:p-4"
                                     >
                                       <div className="flex items-start justify-between gap-2 mb-2">
-                                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                        <div className="flex items-center gap-2 text-xs text-muted-foreground flex-1 min-w-0">
                                           <BookOpen
                                             className="h-3 w-3 flex-shrink-0"
                                             aria-hidden="true"
@@ -548,7 +533,7 @@ export default function CoursePage() {
                                                     catalogNum.trim(),
                                                   )
                                                 }
-                                                className="flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded bg-primary/10 hover:bg-primary/20 transition-colors group whitespace-nowrap flex-shrink-0 text-xs"
+                                                className="flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded bg-primary/10 hover:bg-primary/20 transition-colors group whitespace-nowrap shrink-0 text-xs"
                                                 title="Click to copy catalog number"
                                                 aria-label={`Copy catalog number ${catalogNum}`}
                                                 type="button"
