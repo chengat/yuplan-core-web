@@ -1,6 +1,7 @@
 "use client"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Users, BookOpen, Copy, Check, ExternalLink } from "lucide-react"
 import Link from "next/link"
 import {
@@ -8,6 +9,7 @@ import {
   type Section,
   type Instructor,
   type CourseOffering,
+  type ReviewsResponse,
   getDayName,
   getFacultyName,
   getTypeName,
@@ -21,6 +23,9 @@ import { useEffect, useState } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BlurredHero } from "@/components/blurred-hero"
+import { ReviewStats } from "@/components/review-stats"
+import { ReviewsList } from "@/components/reviews-list"
+import { ReviewForm } from "@/components/review-form"
 
 const TERM_ORDER: Record<string, number> = {
   F: 1,
@@ -46,6 +51,9 @@ export default function CoursePage() {
     Record<string, Instructor>
   >({})
   const [copiedCatalog, setCopiedCatalog] = useState<string | null>(null)
+  const [reviewsData, setReviewsData] = useState<ReviewsResponse | null>(null)
+  const [isLoadingReviews, setIsLoadingReviews] = useState(false)
+  const [isReviewFormOpen, setIsReviewFormOpen] = useState(false)
 
   const selectedOffering =
     offerings.find((o) => o.term === selectedTerm) || offerings[0] || null
@@ -233,6 +241,44 @@ export default function CoursePage() {
 
     fetchInstructors()
   }, [selectedOffering?.id])
+
+  useEffect(() => {
+    async function fetchReviews() {
+      try {
+        setIsLoadingReviews(true)
+        const data = await coursesApi.getReviews(courseCode, {
+          sort: "recent",
+          limit: 10,
+          offset: 0,
+        })
+        setReviewsData(data)
+      } catch (err) {
+        console.error("Failed to fetch reviews:", err)
+        setReviewsData(null)
+      } finally {
+        setIsLoadingReviews(false)
+      }
+    }
+
+    fetchReviews()
+  }, [courseCode])
+
+  const refetchReviews = async () => {
+    try {
+      setIsLoadingReviews(true)
+      const data = await coursesApi.getReviews(courseCode, {
+        sort: "recent",
+        limit: 10,
+        offset: 0,
+      })
+      setReviewsData(data)
+    } catch (err) {
+      console.error("Failed to fetch reviews:", err)
+      setReviewsData(null)
+    } finally {
+      setIsLoadingReviews(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -629,11 +675,62 @@ export default function CoursePage() {
                 )}
               </div>
             </section>
+
+            {/* Reviews Section */}
+            <section className="container mx-auto px-3 sm:px-4 py-6 sm:py-10">
+              <div className="max-w-6xl mx-auto">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                  <h2 className="text-2xl sm:text-3xl font-bold">Reviews</h2>
+                  <Button
+                    onClick={() => setIsReviewFormOpen(true)}
+                    variant="outline"
+                    className="shadow-md shadow-primary"
+                  >
+                    Add your review
+                  </Button>
+                </div>
+
+                {isLoadingReviews ? (
+                  <div className="text-center py-8 sm:py-12 text-sm sm:text-base text-muted-foreground">
+                    Loading reviews...
+                  </div>
+                ) : reviewsData && reviewsData.stats.total_reviews > 0 ? (
+                  <>
+                    <ReviewStats stats={reviewsData.stats} />
+                    <ReviewsList reviews={reviewsData.data} />
+                  </>
+                ) : (
+                  <Card className="p-8 text-center">
+                    <p className="text-muted-foreground mb-4">
+                      No reviews yet. Be the first to review this course!
+                    </p>
+                    <Button
+                      onClick={() => setIsReviewFormOpen(true)}
+                      variant="outline"
+                      className="shadow-md shadow-primary"
+                    >
+                      Write the first review
+                    </Button>
+                  </Card>
+                )}
+              </div>
+            </section>
           </>
         )}
       </div>
 
       <Footer />
+
+      {/* Review Form Dialog */}
+      {selectedOffering && (
+        <ReviewForm
+          courseCode={courseCode}
+          courseName={`${formatCourseCode(selectedOffering.code)} - ${selectedOffering.name}`}
+          isOpen={isReviewFormOpen}
+          onClose={() => setIsReviewFormOpen(false)}
+          onSuccess={refetchReviews}
+        />
+      )}
     </div>
   )
 }

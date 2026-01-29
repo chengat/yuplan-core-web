@@ -1,5 +1,7 @@
 import { apiClient } from "./client"
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "/api"
+
 const DAY_MAP: Record<string, string> = {
   M: "Monday",
   T: "Tuesday",
@@ -225,6 +227,42 @@ export interface PaginatedCoursesParams {
   course_code_range?: string
 }
 
+// Review types
+export interface Review {
+  id: string
+  course_code: string
+  author_name: string | null // null means anonymous
+  liked: boolean
+  difficulty: number // 1-5
+  real_world_relevance: number // 1-5
+  review_text: string
+  created_at: string
+}
+
+export interface ReviewStats {
+  total_reviews: number
+  likes: number
+  dislikes: number
+  like_percentage: number
+  avg_difficulty: number
+  avg_real_world_relevance: number
+}
+
+export interface ReviewsResponse {
+  data: Review[]
+  count: number
+  stats: ReviewStats
+}
+
+export interface SubmitReviewBody {
+  email: string
+  author_name: string | null
+  liked: boolean
+  difficulty: number
+  real_world_relevance: number
+  review_text: string
+}
+
 export const coursesApi = {
   async getAllCourses(): Promise<Course[]> {
     const response = await apiClient.get<CoursesResponse | Course[]>("/courses")
@@ -360,5 +398,53 @@ export const coursesApi = {
     }
     
     return response
+  },
+
+  async getReviews(
+    courseCode: string,
+    params: { sort?: "recent" | "earliest"; limit?: number; offset?: number } = {}
+  ): Promise<ReviewsResponse> {
+    const queryParams = new URLSearchParams()
+    
+    if (params.sort) {
+      queryParams.append("sort", params.sort)
+    }
+    if (params.limit !== undefined) {
+      queryParams.append("limit", params.limit.toString())
+    }
+    if (params.offset !== undefined) {
+      queryParams.append("offset", params.offset.toString())
+    }
+
+    const normalized = courseCode.trim().toLowerCase()
+    const queryString = queryParams.toString()
+    const endpoint = `/courses/${encodeURIComponent(normalized)}/reviews${queryString ? `?${queryString}` : ""}`
+    
+    const response = await apiClient.get<ReviewsResponse>(endpoint)
+    return response
+  },
+
+  async submitReview(
+    courseCode: string,
+    reviewData: SubmitReviewBody
+  ): Promise<Review> {
+    const normalized = courseCode.trim().toLowerCase()
+    const url = `${API_URL}/courses/${encodeURIComponent(normalized)}/reviews`
+    
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reviewData),
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({ error: "Failed to submit review" }))
+      throw new Error(errorData.error || "Failed to submit review")
+    }
+
+    const data = await response.json()
+    return data
   },
 }
