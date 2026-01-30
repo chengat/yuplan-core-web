@@ -70,7 +70,7 @@ export default function ContactPage() {
             <Sparkles className="h-4 w-4" />
             <span className="text-sm font-medium">Get in Touch</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-balance bg-linear-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-balance bg-linear-to-b from-foreground to-foreground/70 bg-clip-text ">
             We'd Love to Hear From You
           </h1>
           <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed text-pretty max-w-2xl mx-auto">
