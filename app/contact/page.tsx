@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Mail, MessageSquare, AlertCircle, Send } from "lucide-react"
+import { Mail, MessageSquare, AlertCircle, Send, Sparkles } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { useState } from "react"
@@ -65,162 +65,224 @@ export default function ContactPage() {
 
       <div className="container mx-auto px-4 py-10 sm:py-16 lg:py-20 flex-1 w-full">
         {/* Hero Section */}
-        <div className="max-w-3xl mx-auto mb-8 sm:mb-12 text-center space-y-4">
-          <Badge className="inline-flex w-auto justify-center mb-2 sm:mb-3 bg-primary/10 text-primary hover:bg-primary/20">
-            Get in Touch
-          </Badge>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-balance">
+        <div className="max-w-6xl mx-auto mb-10 sm:mb-16 text-center space-y-4 sm:space-y-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary border border-primary/20">
+            <Sparkles className="h-4 w-4" />
+            <span className="text-sm font-medium">Get in Touch</span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-balance bg-linear-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
             We'd Love to Hear From You
           </h1>
-          <p className="text-sm sm:text-lg text-muted-foreground leading-relaxed text-pretty max-w-2xl mx-auto">
-            Have feedback about YuPlan? Found an error in our course data?
-            Have a feature suggestion? Let us know! We're committed to improving
-            your course selection experience.
+          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed text-pretty max-w-2xl mx-auto">
+            Have feedback about YuPlan? Found an error in our course data? Have
+            a feature suggestion? Let us know!
           </p>
         </div>
 
-        {/* Contact Info Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 max-w-4xl mx-auto mb-9 sm:mb-12">
-          <Card className="p-4 sm:p-6 lg:p-8 text-center h-full">
-            <div className="h-10 w-10 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-3 sm:mb-4">
-              <MessageSquare className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+        {/* Two Column Layout */}
+        <div className="max-w-6xl mx-auto grid grid-cols-1 xl:grid-cols-2 gap-8 xl:gap-12">
+          {/* Left Column - Contact Info */}
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-2">
+                How can we help?
+              </h2>
+              <p className="text-muted-foreground">
+                Choose from the options below and we'll get back to you as soon
+                as possible.
+              </p>
             </div>
-            <h3 className="font-bold mb-2">Feedback</h3>
-            <p className="text-sm text-muted-foreground">
-              Share your thoughts and help us improve
-            </p>
-          </Card>
 
-          <Card className="p-4 sm:p-6 lg:p-8 text-center h-full">
-            <div className="h-10 w-10 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-3 sm:mb-4">
-              <AlertCircle className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
-            </div>
-            <h3 className="font-bold mb-2">Report Issues</h3>
-            <p className="text-sm text-muted-foreground">
-              Found incorrect course information?
-            </p>
-          </Card>
-
-          <Card className="p-4 sm:p-6 lg:p-8 text-center h-full">
-            <div className="h-10 w-10 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-3 sm:mb-4">
-              <Mail className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
-            </div>
-            <h3 className="font-bold mb-2">Suggestions</h3>
-            <p className="text-sm text-muted-foreground">
-              Have a feature idea? We'd love to hear it!
-            </p>
-          </Card>
-        </div>
-
-        {/* Contact Form */}
-        <div className="max-w-2xl mx-auto w-full">
-          <Card className="p-5 sm:p-8">
-            {submitted ? (
-              <div className="text-center py-8">
-                <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Send className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Thank You!</h3>
-                <p className="text-muted-foreground mb-6">
-                  We've received your message and will get back to you soon.
-                  Your feedback helps us improve YuPlan.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium mb-2"
-                    >
-                      Name *
-                    </label>
-                    <Input
-                      id="name"
-                      name="name"
-                      type="text"
-                      placeholder="Your name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      required
-                      className="h-11"
-                    />
+            <div className="space-y-4">
+              <Card className="p-5 sm:p-6 hover:shadow-lg hover:border-primary/30 transition-all group">
+                <div className="flex items-start gap-4">
+                  <div className="h-12 w-12 bg-linear-to-br from-primary/20 to-primary/5 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                    <MessageSquare className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium mb-2"
-                    >
-                      Email *
-                    </label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="your@email.com"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      className="h-11"
-                    />
+                    <h3 className="font-bold text-lg mb-1">Feedback</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Share your thoughts and help us improve the platform
+                    </p>
                   </div>
                 </div>
+              </Card>
 
-                <div>
-                  <label
-                    htmlFor="type"
-                    className="block text-sm font-medium mb-2"
-                  >
-                    Message Type *
-                  </label>
-                  <select
-                    id="type"
-                    name="type"
-                    value={formData.type}
-                    onChange={handleInputChange}
-                    className="w-full h-11 px-3 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
-                  >
-                    <option value="feedback">General Feedback</option>
-                    <option value="bug">Report Incorrect Data</option>
-                    <option value="feature">Feature Suggestion</option>
-                    <option value="other">Other</option>
-                  </select>
+              <Card className="p-5 sm:p-6 hover:shadow-lg hover:border-primary/30 transition-all group">
+                <div className="flex items-start gap-4">
+                  <div className="h-12 w-12 bg-linear-to-br from-primary/20 to-primary/5 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                    <AlertCircle className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg mb-1">Report Issues</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Found incorrect course information? Let us know
+                    </p>
+                  </div>
                 </div>
+              </Card>
 
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium mb-2"
-                  >
-                    Message *
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    placeholder="Tell us what's on your mind..."
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    required
-                    rows={5}
-                    className="w-full px-3 py-2 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
-                  />
+              <Card className="p-5 sm:p-6 hover:shadow-lg hover:border-primary/30 transition-all group">
+                <div className="flex items-start gap-4">
+                  <div className="h-12 w-12 bg-linear-to-br from-primary/20 to-primary/5 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                    <Mail className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg mb-1">
+                      Feature Suggestions
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Have a feature idea? We'd love to hear it!
+                    </p>
+                  </div>
                 </div>
+              </Card>
+            </div>
 
-                <Button
-                  type="submit"
-                  className="w-full h-11"
-                  disabled={loading}
-                >
-                  {loading ? "Sending…" : "Send Message"}
-                </Button>
+            <Card className="p-5 sm:p-6 bg-muted/50 border-dashed">
+              <p className="text-sm text-muted-foreground text-center">
+                <span className="font-semibold text-foreground">
+                  Response Time:
+                </span>{" "}
+                We typically respond within 24-48 hours during business days.
+              </p>
+            </Card>
+          </div>
 
-                <p className="text-xs text-muted-foreground text-center">
-                  We typically respond within 24-48 hours during business days.
-                </p>
-              </form>
-            )}
-          </Card>
+          {/* Right Column - Contact Form */}
+          <div className="xl:sticky xl:top-8 xl:self-start">
+            <Card className="p-6 sm:p-8 shadow-xl border-primary/10">
+              {submitted ? (
+                <div className="text-center py-12 sm:py-16">
+                  <div className="relative inline-flex mb-6">
+                    <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl animate-pulse" />
+                    <div className="relative h-16 w-16 sm:h-20 sm:w-20 bg-linear-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center">
+                      <Send className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
+                    </div>
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-bold mb-3">
+                    Thank You!
+                  </h3>
+                  <p className="text-base sm:text-lg text-muted-foreground mb-8 max-w-md mx-auto leading-relaxed">
+                    We've received your message and will get back to you soon.
+                    Your feedback helps us improve YuPlan.
+                  </p>
+                  <div className="h-1 w-24 bg-linear-to-r from-transparent via-primary/50 to-transparent rounded-full mx-auto" />
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-bold mb-2">
+                      Send us a message
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Fill out the form below and we'll get back to you.
+                    </p>
+                  </div>
+
+                  <div className="space-y-5">
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-semibold mb-2.5"
+                      >
+                        Name <span className="text-primary">*</span>
+                      </label>
+                      <Input
+                        id="name"
+                        name="name"
+                        type="text"
+                        placeholder="Your name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required
+                        className="h-11 transition-all focus:ring-2 focus:ring-primary/30"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-semibold mb-2.5"
+                      >
+                        Email <span className="text-primary">*</span>
+                      </label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="your@email.com"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                        className="h-11 transition-all focus:ring-2 focus:ring-primary/30"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="type"
+                        className="block text-sm font-semibold mb-2.5"
+                      >
+                        Message Type <span className="text-primary">*</span>
+                      </label>
+                      <select
+                        id="type"
+                        name="type"
+                        value={formData.type}
+                        onChange={handleInputChange}
+                        className="w-full h-11 px-4 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                      >
+                        <option value="feedback">General Feedback</option>
+                        <option value="bug">Report Incorrect Data</option>
+                        <option value="feature">Feature Suggestion</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="message"
+                        className="block text-sm font-semibold mb-2.5"
+                      >
+                        Message <span className="text-primary">*</span>
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        placeholder="Tell us what's on your mind..."
+                        value={formData.message}
+                        onChange={handleInputChange}
+                        required
+                        rows={5}
+                        className="w-full px-4 py-3 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full h-11 text-base font-semibold shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all bg-linear-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary disabled:opacity-50"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <span className="inline-block animate-pulse">
+                          Sending
+                        </span>
+                        <span className="inline-block animate-bounce">...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="h-4 w-4 mr-2" />
+                        Send Message
+                      </>
+                    )}
+                  </Button>
+                </form>
+              )}
+            </Card>
+          </div>
         </div>
       </div>
 
