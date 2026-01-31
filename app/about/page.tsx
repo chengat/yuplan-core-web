@@ -73,9 +73,9 @@ export default function AboutPage() {
         {/* Value Highlights */}
         <section className="container mx-auto px-3 sm:px-4 py-10 sm:py-12 md:py-16">
           <div className="max-w-6xl mx-auto">
-            <div className="grid gap-5 lg:gap-6 lg:grid-cols-3">
-              <Card className="p-7 lg:col-span-2 bg-linear-to-br from-primary/10 via-primary/5 to-background border-primary/20">
-                <div className="flex items-start gap-4 mb-5 min-h-22">
+            <div className="grid gap-3 sm:gap-4 lg:gap-6 lg:grid-cols-3">
+              <Card className="p-4 sm:p-5 lg:p-6 lg:col-span-2 bg-linear-to-br from-primary/10 via-primary/5 to-background border-primary/20">
+                <div className="flex items-start gap-4 mb-1 sm:mb-2 min-h-14 sm:min-h-16 lg:min-h-18">
                   <div className="h-12 w-12 min-w-12 rounded-xl bg-primary/20 flex items-center justify-center ring-2 ring-primary/30">
                     <Search className="h-6 w-6 text-primary" />
                   </div>
@@ -88,7 +88,7 @@ export default function AboutPage() {
                     </p>
                   </div>
                 </div>
-                <div className="grid gap-3 sm:grid-cols-3">
+                <div className="grid gap-1.5 sm:gap-2 sm:grid-cols-3">
                   {[
                     "Student reviews + ratings",
                     "Prereqs clearly surfaced",
@@ -96,7 +96,7 @@ export default function AboutPage() {
                   ].map((item) => (
                     <div
                       key={item}
-                      className="rounded-xl border-2 border-border/80 px-4 py-3 bg-background shadow-sm hover:shadow-md hover:border-primary/30 transition-all"
+                      className="rounded-xl border-2 border-border/80 px-3 py-1.5 sm:px-4 sm:py-2 bg-background shadow-sm hover:shadow-md hover:border-primary/30 transition-all"
                     >
                       <span className="text-sm font-medium text-foreground whitespace-nowrap">
                         {item}
@@ -106,8 +106,8 @@ export default function AboutPage() {
                 </div>
               </Card>
 
-              <Card className="p-7 hover:shadow-lg transition-shadow">
-                <div className="flex items-start gap-4 mb-5 min-h-22">
+              <Card className="p-4 sm:p-5 lg:p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-start gap-4 mb-1 sm:mb-2 min-h-14 sm:min-h-16 lg:min-h-18">
                   <div className="h-12 w-12 min-w-12 rounded-xl bg-primary/20 flex items-center justify-center ring-2 ring-primary/30">
                     <Calendar className="h-6 w-6 text-primary" />
                   </div>
@@ -116,17 +116,17 @@ export default function AboutPage() {
                       Section comparison
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      View all available sections side-by-side.
+                      View available sections side-by-side.
                     </p>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <div className="rounded-lg bg-muted/60 px-4 py-3 border border-border/50">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <div className="rounded-lg bg-muted/60 px-3 py-1.5 sm:px-4 sm:py-2 border border-border/50">
                     <span className="text-sm font-medium text-foreground whitespace-nowrap">
                       See all meeting times
                     </span>
                   </div>
-                  <div className="rounded-lg bg-muted/60 px-4 py-3 border border-border/50">
+                  <div className="rounded-lg bg-muted/60 px-3 py-1.5 sm:px-4 sm:py-2 border border-border/50">
                     <span className="text-sm font-medium text-foreground whitespace-nowrap">
                       Compare instructor options
                     </span>
@@ -134,8 +134,8 @@ export default function AboutPage() {
                 </div>
               </Card>
 
-              <Card className="p-7 hover:shadow-lg transition-shadow">
-                <div className="flex items-start gap-4 mb-5 min-h-22">
+              <Card className="p-4 sm:p-5 lg:p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-start gap-4 mb-1 sm:mb-2 min-h-14 sm:min-h-16 lg:min-h-18">
                   <div className="h-12 w-12 min-w-12 rounded-xl bg-primary/20 flex items-center justify-center ring-2 ring-primary/30">
                     <Info className="h-6 w-6 text-primary" />
                   </div>
@@ -144,18 +144,17 @@ export default function AboutPage() {
                       Unofficial course data
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      Sourced from YorkU listings, not verified by the
-                      university.
+                      Sourced from YorkU listings.
                     </p>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <div className="rounded-lg bg-muted/60 px-4 py-3 border border-border/50">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <div className="rounded-lg bg-muted/60 px-3 py-1.5 sm:px-4 sm:py-2 border border-border/50">
                     <span className="text-sm font-medium text-foreground whitespace-nowrap">
                       Updated regularly
                     </span>
                   </div>
-                  <div className="rounded-lg bg-muted/60 px-4 py-3 border border-border/50">
+                  <div className="rounded-lg bg-muted/60 px-3 py-1.5 sm:px-4 sm:py-2 border border-border/50">
                     <span className="text-sm font-medium text-foreground whitespace-nowrap">
                       Faculty + credit info included
                     </span>
@@ -163,8 +162,8 @@ export default function AboutPage() {
                 </div>
               </Card>
 
-              <Card className="p-7 hover:shadow-lg transition-shadow">
-                <div className="flex items-start gap-4 mb-5 min-h-22">
+              <Card className="p-4 sm:p-5 lg:p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-start gap-4 mb-1 sm:mb-2 min-h-14 sm:min-h-16 lg:min-h-18">
                   <div className="h-12 w-12 min-w-12 rounded-xl bg-primary/20 flex items-center justify-center ring-2 ring-primary/30">
                     <BookOpen className="h-6 w-6 text-primary" />
                   </div>
@@ -177,13 +176,13 @@ export default function AboutPage() {
                     </p>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <div className="rounded-lg bg-muted/60 px-4 py-3 border border-border/50">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <div className="rounded-lg bg-muted/60 px-3 py-1.5 sm:px-4 sm:py-2 border border-border/50">
                     <span className="text-sm font-medium text-foreground whitespace-nowrap">
                       Descriptions, prereqs, credits
                     </span>
                   </div>
-                  <div className="rounded-lg bg-muted/60 px-4 py-3 border border-border/50">
+                  <div className="rounded-lg bg-muted/60 px-3 py-1.5 sm:px-4 sm:py-2 border border-border/50">
                     <span className="text-sm font-medium text-foreground whitespace-nowrap">
                       Student reviews + feedback
                     </span>
@@ -191,8 +190,8 @@ export default function AboutPage() {
                 </div>
               </Card>
 
-              <Card className="p-7 hover:shadow-lg transition-shadow">
-                <div className="flex items-start gap-4 mb-5 min-h-22">
+              <Card className="p-4 sm:p-5 lg:p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-start gap-4 mb-1 sm:mb-2 min-h-14 sm:min-h-16 lg:min-h-18">
                   <div className="h-12 w-12 min-w-12 rounded-xl bg-primary/20 flex items-center justify-center ring-2 ring-primary/30">
                     <Users className="h-6 w-6 text-primary" />
                   </div>
@@ -201,17 +200,17 @@ export default function AboutPage() {
                       Instructor insights
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      Learn about who's teaching before you enroll.
+                      Learn who's teaching before enrolling.
                     </p>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <div className="rounded-lg bg-muted/60 px-4 py-3 border border-border/50">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <div className="rounded-lg bg-muted/60 px-3 py-1.5 sm:px-4 sm:py-2 border border-border/50">
                     <span className="text-sm font-medium text-foreground whitespace-nowrap">
                       Direct RateMyProfessors links
                     </span>
                   </div>
-                  <div className="rounded-lg bg-muted/60 px-4 py-3 border border-border/50">
+                  <div className="rounded-lg bg-muted/60 px-3 py-1.5 sm:px-4 sm:py-2 border border-border/50">
                     <span className="text-sm font-medium text-foreground whitespace-nowrap">
                       Browse courses by instructor
                     </span>
