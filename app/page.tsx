@@ -164,9 +164,9 @@ export default function HomePage() {
 
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-balance leading-tight text-white drop-shadow-sm">
                   <span className="sr-only">{heroText}</span>
-                  <span aria-hidden className="relative inline-block">
-                    <span className="invisible">{heroText}</span>
-                    <span className="absolute inset-0">
+                  <span aria-hidden className="relative block">
+                    <span className="invisible whitespace-pre-wrap">{heroText}</span>
+                    <span className="absolute inset-0 whitespace-pre-wrap">
                       {typedHeroText}
                       {typedHeroText.length < heroText.length && (
                         <span
