@@ -165,10 +165,10 @@ export default function HomePage() {
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white drop-shadow-sm whitespace-nowrap">
                   <span className="sr-only">{heroText}</span>
                   <span aria-hidden className="relative block">
-                    <span className="invisible whitespace-pre-wrap">
+                    <span className="invisible whitespace-nowrap">
                       {heroText}
                     </span>
-                    <span className="absolute inset-0 whitespace-pre-wrap">
+                    <span className="absolute inset-0 whitespace-nowrap">
                       {typedHeroText}
                       {typedHeroText.length < heroText.length && (
                         <span
@@ -327,9 +327,11 @@ export default function HomePage() {
                     </Link>
                   </div>
                   {isLoading ? (
-                    <p className="text-sm text-muted-foreground">
-                      Loading picks...
-                    </p>
+                    <div className="space-y-2 min-h-42 flex items-center justify-center">
+                      <p className="text-sm text-muted-foreground">
+                        Loading picks...
+                      </p>
+                    </div>
                   ) : topCourses.length === 0 ? (
                     <p className="text-sm text-muted-foreground">
                       No courses available.
