@@ -75,7 +75,7 @@ export default function AboutPage() {
           <div className="max-w-6xl mx-auto">
             <div className="grid gap-5 lg:gap-6 lg:grid-cols-3">
               <Card className="p-7 lg:col-span-2 bg-linear-to-br from-primary/10 via-primary/5 to-background border-primary/20">
-                <div className="flex items-start gap-4 mb-6">
+                <div className="flex items-start gap-4 mb-5 min-h-22">
                   <div className="h-12 w-12 min-w-12 rounded-xl bg-primary/20 flex items-center justify-center ring-2 ring-primary/30">
                     <Search className="h-6 w-6 text-primary" />
                   </div>
