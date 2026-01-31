@@ -38,7 +38,7 @@ export default function HomePage() {
   const [isSearching, setIsSearching] = useState(false)
   const [showResults, setShowResults] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
-  const heroText = "Find your perfect courses"
+  const heroText = "Plan your perfect semester."
   const [typedHeroText, setTypedHeroText] = useState("")
 
   useEffect(() => {
@@ -162,10 +162,12 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-balance leading-tight text-white drop-shadow-sm">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white drop-shadow-sm whitespace-nowrap">
                   <span className="sr-only">{heroText}</span>
                   <span aria-hidden className="relative block">
-                    <span className="invisible whitespace-pre-wrap">{heroText}</span>
+                    <span className="invisible whitespace-pre-wrap">
+                      {heroText}
+                    </span>
                     <span className="absolute inset-0 whitespace-pre-wrap">
                       {typedHeroText}
                       {typedHeroText.length < heroText.length && (
