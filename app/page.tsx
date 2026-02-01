@@ -162,7 +162,7 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight text-white drop-shadow-sm">
+                <h1 className="text-2xl md:text-4xl lg:text-4xl font-bold leading-tight text-white drop-shadow-sm">
                   <span className="sr-only">{heroText}</span>
                   <span aria-hidden className="relative block">
                     <span className="invisible whitespace-nowrap">
