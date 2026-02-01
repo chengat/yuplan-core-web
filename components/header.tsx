@@ -18,7 +18,7 @@ interface HeaderProps {
 export function Header({ subtitle }: HeaderProps) {
   return (
     <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-      <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between sm:grid sm:grid-cols-3 gap-3 sm:gap-4">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 py-3 sm:py-4 flex items-center justify-between md:grid md:grid-cols-3 gap-2 sm:gap-4">
         <Link
           href="/"
           className="flex items-center gap-1.5 sm:gap-2 justify-self-start shrink-0"
@@ -26,7 +26,7 @@ export function Header({ subtitle }: HeaderProps) {
           <img
             src={Logo.src}
             alt="YUPlan - York University Course Planner"
-            className="w-auto h-5 md:h-7 object-contain"
+            className="w-auto h-5 sm:h-6 lg:h-7 object-contain"
           />
         </Link>
         {subtitle && (
@@ -34,7 +34,7 @@ export function Header({ subtitle }: HeaderProps) {
             {subtitle}
           </p>
         )}
-        <div className="flex items-center gap-2 sm:gap-4 justify-self-end shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-3 lg:gap-4 justify-self-end shrink-0">
           <nav className="hidden lg:flex items-center gap-4 text-sm">
             <Link
               href="/about"
@@ -60,7 +60,7 @@ export function Header({ subtitle }: HeaderProps) {
           <Link href="/courses" className="lg:hidden">
             <Button
               variant="outline"
-              className="shadow-md shadow-primary text-xs px-2 py-1 h-8"
+              className="shadow-md shadow-primary text-xs px-2.5 sm:px-3 py-1 h-8"
             >
               All Courses
             </Button>
@@ -71,7 +71,7 @@ export function Header({ subtitle }: HeaderProps) {
               <Button
                 variant="outline"
                 size="icon"
-                className="lg:hidden shadow-md shadow-primary"
+                className="lg:hidden shadow-md shadow-primary h-8 w-8"
                 aria-label="Open menu"
               >
                 <Menu className="size-4" />
