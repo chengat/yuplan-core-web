@@ -1,5 +1,6 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -28,6 +29,26 @@ import {
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BlurredHero } from "@/components/blurred-hero"
+
+// Animation variants
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 },
+}
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+}
+
+const cardVariant = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+}
 
 export default function HomePage() {
   const [topCourses, setTopCourses] = useState<Course[]>([])
@@ -151,8 +172,17 @@ export default function HomePage() {
         >
           <div className="container mx-auto px-4 sm:px-6 md:px-8">
             <div className="grid gap-6 sm:gap-10 lg:grid-cols-2 lg:items-center">
-              <div className="space-y-6 text-center lg:text-left">
-                <div className="flex flex-wrap items-center gap-2 justify-center lg:justify-start">
+              <motion.div
+                className="space-y-6 text-center lg:text-left"
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: false, margin: "-50px 0px -10px 0px" }}
+                variants={staggerContainer}
+              >
+                <motion.div
+                  className="flex flex-wrap items-center gap-2 justify-center lg:justify-start"
+                  variants={fadeInUp}
+                >
                   <span className="inline-flex items-center gap-2 rounded-full bg-primary/90 px-3 py-1 text-xs sm:text-sm font-semibold text-primary-foreground shadow-md">
                     <Sparkles className="h-4 w-4" />
                     Fall/Winter 2025-2026
@@ -160,9 +190,12 @@ export default function HomePage() {
                   <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs sm:text-sm text-white/90">
                     Built for YorkU students
                   </span>
-                </div>
+                </motion.div>
 
-                <h1 className="text-2xl md:text-4xl lg:text-4xl font-bold leading-tight text-white drop-shadow-sm">
+                <motion.h1
+                  className="text-2xl md:text-4xl lg:text-4xl font-bold leading-tight text-white drop-shadow-sm"
+                  variants={fadeInUp}
+                >
                   <span className="sr-only">{heroText}</span>
                   <span aria-hidden className="relative block">
                     <span className="invisible whitespace-nowrap">
@@ -178,14 +211,20 @@ export default function HomePage() {
                       )}
                     </span>
                   </span>
-                </h1>
-                <p className="text-sm sm:text-base md:text-xl text-white/85 text-pretty max-w-xl mx-auto lg:mx-0">
+                </motion.h1>
+                <motion.p
+                  className="text-sm sm:text-base md:text-xl text-white/85 text-pretty max-w-xl mx-auto lg:mx-0"
+                  variants={fadeInUp}
+                >
                   Explore YorkU courses with ease. View detailed course info,
                   compare sections, read student reviews, and make informed
                   decisions.
-                </p>
+                </motion.p>
 
-                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center lg:justify-start">
+                <motion.div
+                  className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center lg:justify-start"
+                  variants={fadeInUp}
+                >
                   <Link href="/courses" className="w-full sm:w-auto">
                     <Button className="w-full sm:w-auto shadow-md">
                       Browse Courses
@@ -199,9 +238,12 @@ export default function HomePage() {
                       How it works
                     </Button>
                   </Link>
-                </div>
+                </motion.div>
 
-                <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-foreground/80 justify-center lg:justify-start">
+                <motion.div
+                  className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-foreground/80 justify-center lg:justify-start"
+                  variants={fadeInUp}
+                >
                   <span className="inline-flex items-center gap-2 rounded-full bg-white/85 text-slate-900 ring-1 ring-black/5 px-3 py-1 dark:bg-white/10 dark:text-white/85 dark:ring-white/10">
                     <MessageSquareText className="h-4 w-4" />
                     Student reviews inside
@@ -214,10 +256,16 @@ export default function HomePage() {
                     <Search className="h-4 w-4" />
                     Fast course search
                   </span>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
-              <div className="space-y-3 sm:space-y-4">
+              <motion.div
+                className="space-y-3 sm:space-y-4"
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, margin: "-50px 0px -10px 0px" }}
+                transition={{ duration: 0.6 }}
+              >
                 <Card className="p-3 sm:p-4 md:p-5 bg-background/95 backdrop-blur border-primary/20 shadow-2xl overflow-visible">
                   <div className="flex items-center justify-between mb-1">
                     <div>
@@ -358,14 +406,20 @@ export default function HomePage() {
                     </div>
                   )}
                 </Card>
-              </div>
+              </motion.div>
             </div>
           </div>
         </BlurredHero>
 
         <section className="container mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12 md:py-16">
           <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+            <motion.div
+              className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, margin: "-50px 0px -10px 0px" }}
+              transition={{ duration: 0.5 }}
+            >
               <div>
                 <h2 className="text-2xl sm:text-3xl font-bold mb-2">
                   Trending Courses
@@ -382,7 +436,7 @@ export default function HomePage() {
                   View All
                 </Button>
               </Link>
-            </div>
+            </motion.div>
 
             {isLoading ? (
               <div className="text-center py-8 sm:py-12 text-muted-foreground">
@@ -397,58 +451,68 @@ export default function HomePage() {
                 No courses available.
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
+              <motion.div
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4"
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: false, margin: "-50px 0px -10px 0px" }}
+                variants={staggerContainer}
+              >
                 {topCourses.map((course) => (
-                  <Link
-                    key={course.id}
-                    href={`/course/${course.code?.replace(/\s+/g, "").toLowerCase()}`}
-                  >
-                    <Card className="p-4 sm:p-5 hover:shadow-lg transition-all hover:border-primary/50 cursor-pointer group flex flex-col h-full">
-                      <div className="flex items-start justify-between mb-2 shrink-0 gap-2 sm:gap-3">
-                        <div className="flex-1 min-w-0 pr-2">
-                          <h3 className="font-bold text-lg sm:text-xl mb-0.5 group-hover:text-primary transition-colors line-clamp-1">
-                            {formatCourseCode(course.code)}
-                          </h3>
-                          <p
-                            className="text-xs sm:text-sm text-foreground font-medium line-clamp-3 min-h-15 sm:min-h-17 leading-snug"
-                            title={course.name}
+                  <motion.div key={course.id} variants={cardVariant}>
+                    <Link
+                      href={`/course/${course.code?.replace(/\s+/g, "").toLowerCase()}`}
+                    >
+                      <Card className="p-4 sm:p-5 hover:shadow-lg transition-all hover:border-primary/50 cursor-pointer group flex flex-col h-full">
+                        <div className="flex items-start justify-between mb-2 shrink-0 gap-2 sm:gap-3">
+                          <div className="flex-1 min-w-0 pr-2">
+                            <h3 className="font-bold text-lg sm:text-xl mb-0.5 group-hover:text-primary transition-colors line-clamp-1">
+                              {formatCourseCode(course.code)}
+                            </h3>
+                            <p
+                              className="text-xs sm:text-sm text-foreground font-medium line-clamp-3 min-h-15 sm:min-h-17 leading-snug"
+                              title={course.name}
+                            >
+                              {course.name}
+                            </p>
+                          </div>
+                          <Badge
+                            variant="secondary"
+                            className="shrink-0 text-xs"
                           >
-                            {course.name}
+                            {course.credits} credit
+                            {course.credits === 1 ? "" : "s"}
+                          </Badge>
+                        </div>
+
+                        <div className="flex items-start gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-2 shrink-0">
+                          <div className="flex items-start gap-1 min-w-0">
+                            <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 shrink-0 mt-0.5" />
+                            <span className="min-w-0 leading-snug whitespace-normal wrap-break-word">
+                              {course.faculty
+                                ? getFacultyName(course.faculty)
+                                : "Faculty N/A"}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-2.5 border-t border-border mt-auto gap-2">
+                          <p className="text-xs sm:text-sm text-muted-foreground truncate flex-1 min-w-0">
+                            {course.instructor}
                           </p>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="group-hover:bg-primary group-hover:text-primary-foreground w-full sm:w-auto text-xs sm:text-sm shadow-md hover:shadow-lg border-2 sm:border-2"
+                          >
+                            View Details
+                          </Button>
                         </div>
-                        <Badge variant="secondary" className="shrink-0 text-xs">
-                          {course.credits} credit
-                          {course.credits === 1 ? "" : "s"}
-                        </Badge>
-                      </div>
-
-                      <div className="flex items-start gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground mb-2 shrink-0">
-                        <div className="flex items-start gap-1 min-w-0">
-                          <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 shrink-0 mt-0.5" />
-                          <span className="min-w-0 leading-snug whitespace-normal wrap-break-word">
-                            {course.faculty
-                              ? getFacultyName(course.faculty)
-                              : "Faculty N/A"}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-2.5 border-t border-border mt-auto gap-2">
-                        <p className="text-xs sm:text-sm text-muted-foreground truncate flex-1 min-w-0">
-                          {course.instructor}
-                        </p>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="group-hover:bg-primary group-hover:text-primary-foreground w-full sm:w-auto text-xs sm:text-sm shadow-md hover:shadow-lg border-2 sm:border-2"
-                        >
-                          View Details
-                        </Button>
-                      </div>
-                    </Card>
-                  </Link>
+                      </Card>
+                    </Link>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             )}
           </div>
         </section>
@@ -458,15 +522,27 @@ export default function HomePage() {
           className="container mx-auto px-4 sm:px-6 md:px-8 pb-8 sm:pb-12 md:pb-16"
         >
           <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+            <motion.div
+              className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, margin: "-50px 0px -10px 0px" }}
+              transition={{ duration: 0.5 }}
+            >
               <div>
                 <h2 className="text-2xl sm:text-3xl font-bold">How it works</h2>
                 <p className="text-sm sm:text-base text-muted-foreground">
                   A clear, three-step flow to build your schedule.
                 </p>
               </div>
-            </div>
-            <div className="grid gap-3 sm:gap-4 lg:grid-cols-3">
+            </motion.div>
+            <motion.div
+              className="grid gap-3 sm:gap-4 lg:grid-cols-3"
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: false, margin: "-50px 0px -10px 0px" }}
+              variants={staggerContainer}
+            >
               {[
                 {
                   title: "Search",
@@ -481,26 +557,34 @@ export default function HomePage() {
                   body: "Build a conflict-free schedule and save your picks.",
                 },
               ].map((step, index) => (
-                <Card key={step.title} className="p-4 sm:p-6 h-full">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center text-sm font-semibold text-primary">
-                      {index + 1}
+                <motion.div key={step.title} variants={cardVariant}>
+                  <Card className="p-4 sm:p-6 h-full">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center text-sm font-semibold text-primary">
+                        {index + 1}
+                      </div>
+                      <h3 className="text-base sm:text-lg font-semibold">
+                        {step.title}
+                      </h3>
                     </div>
-                    <h3 className="text-base sm:text-lg font-semibold">
-                      {step.title}
-                    </h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {step.body}
-                  </p>
-                </Card>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {step.body}
+                    </p>
+                  </Card>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
         <section className="container mx-auto px-4 sm:px-6 md:px-8 pb-12 sm:pb-16">
-          <div className="max-w-6xl mx-auto rounded-2xl bg-linear-to-r from-primary/15 via-primary/10 to-background p-4 sm:p-8 md:p-10 flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-6">
+          <motion.div
+            className="max-w-6xl mx-auto rounded-2xl bg-linear-to-r from-primary/15 via-primary/10 to-background p-4 sm:p-8 md:p-10 flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-6"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-50px 0px -10px 0px" }}
+            transition={{ duration: 0.6 }}
+          >
             <div>
               <p className="text-xs sm:text-sm uppercase tracking-widest text-primary">
                 Ready to start?
@@ -517,7 +601,7 @@ export default function HomePage() {
                 Browse Courses
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </section>
       </div>
 
