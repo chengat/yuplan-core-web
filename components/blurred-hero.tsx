@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import Image from "next/image"
 import { cn } from "@/lib/utils"
@@ -30,16 +30,16 @@ export function BlurredHero({
   children,
   className,
   contentClassName,
-  imageSrc = "/background-image.png",
+  imageSrc = "/background-image.webp",
   imageAlt = "Background",
   imageClassName,
   tintClassName,
   contrastOverlayClassName,
   fadeClassName,
-  priority = false,
+  priority = true,
 }: BlurredHeroProps) {
   return (
-    <section className={cn("relative isolate", className)}>
+    <section className={cn("relative isolate aspect-21/9", className)}>
       {/* Background is clipped, content can overflow (search dropdown) */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <Image
@@ -47,31 +47,19 @@ export function BlurredHero({
           alt={imageAlt}
           fill
           priority={priority}
+          decoding="async"
           sizes="100vw"
           className={cn(
             // scale avoids blur edges showing transparent borders
-            "pointer-events-none select-none object-cover scale-110 blur-[10px] saturate-[1.05] brightness-[0.72]",
+            "pointer-events-none select-none object-cover scale-110 blur-[10px]",
             imageClassName,
           )}
         />
         <div
           className={cn(
-            // warm/red tint overlay like the screenshots
-            "absolute inset-0 bg-primary/20 mix-blend-multiply",
-            tintClassName,
-          )}
-        />
-        <div
-          className={cn(
-            // subtle dark wash for readability
-            "absolute inset-0 bg-black/20",
+            // Combined overlay: contrast and fade in one layer
+            "absolute inset-0 bg-linear-to-b from-black/10 via-black/10 to-background",
             contrastOverlayClassName,
-          )}
-        />
-        <div
-          className={cn(
-            // fade to the page background so it blends nicely
-            "absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-background",
             fadeClassName,
           )}
         />
@@ -81,4 +69,3 @@ export function BlurredHero({
     </section>
   )
 }
-

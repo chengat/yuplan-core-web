@@ -1,4 +1,6 @@
-import type { Metadata } from "next"
+"use client"
+
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -16,16 +18,24 @@ import Link from "next/link"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 
-export const metadata: Metadata = {
-  title: "About YuPlan - York University Course Planning Made Easy",
-  description:
-    "Learn about YuPlan, the modern course planning platform built for York University students. Discover how we help YorkU students find courses, compare sections, and plan their academic journey.",
-  openGraph: {
-    title: "About YuPlan - York University Course Planning",
-    description:
-      "Meet the team behind YuPlan, the course planning tool designed specifically for York University students.",
-    url: "https://yuplan.ca/about",
-  },
+// Animation variants
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 }
+}
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+}
+
+const cardVariant = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 }
 }
 
 export default function AboutPage() {
@@ -52,29 +62,51 @@ export default function AboutPage() {
 
       <div className="container mx-auto px-3 sm:px-4 py-10 sm:py-14 md:py-18 grow">
         {/* Hero Section */}
-        <div className="max-w-4xl mx-auto mb-10 sm:mb-14 md:mb-16 text-center space-y-4 sm:space-y-6">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary border border-primary/20">
+        <motion.div 
+          className="max-w-4xl mx-auto mb-10 sm:mb-14 md:mb-16 text-center space-y-4 sm:space-y-6"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: false, amount: 0.1, margin: "0px 0px -100px 0px" }}
+          variants={staggerContainer}
+        >
+          <motion.div 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary border border-primary/20"
+            variants={fadeInUp}
+          >
             <Sparkles className="h-4 w-4" />
             <span className="text-sm font-medium">About YuPlan</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-balance bg-linear-to-b from-foreground to-foreground/70 bg-clip-text">
+          </motion.div>
+          <motion.h1 
+            className="text-4xl sm:text-5xl md:text-6xl font-bold text-balance bg-linear-to-b from-foreground to-foreground/70 bg-clip-text"
+            variants={fadeInUp}
+          >
             Course planning, reimagined for YorkU students
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed text-pretty max-w-3xl mx-auto">
+          </motion.h1>
+          <motion.p 
+            className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed text-pretty max-w-3xl mx-auto"
+            variants={fadeInUp}
+          >
             YuPlan is a modern course planning platform designed to help York
             University (YorkU) students discover, explore, and plan their
             academic journey. We provide an intuitive interface for browsing
             York University courses, viewing detailed information, comparing
             sections, and making informed decisions about your education at York
             University.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Value Highlights */}
         <section className="container mx-auto px-3 sm:px-4 py-10 sm:py-12 md:py-16">
           <div className="max-w-6xl mx-auto">
-            <div className="grid gap-3 sm:gap-4 lg:gap-6 lg:grid-cols-3">
-              <Card className="p-4 sm:p-5 lg:p-6 lg:col-span-2 bg-linear-to-br from-primary/10 via-primary/5 to-background border-primary/20">
+            <motion.div 
+              className="grid gap-3 sm:gap-4 lg:gap-6 lg:grid-cols-3"
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: false, amount: 0.1, margin: "0px 0px -150px 0px" }}
+              variants={staggerContainer}
+            >
+              <motion.div variants={cardVariant} className="lg:col-span-2">
+                <Card className="p-4 sm:p-5 lg:p-6 bg-linear-to-br from-primary/10 via-primary/5 to-background border-primary/20">
                 <div className="flex items-start gap-4 mb-1 sm:mb-2 min-h-14 sm:min-h-16 lg:min-h-18">
                   <div className="h-12 w-12 min-w-12 rounded-xl bg-primary/20 flex items-center justify-center ring-2 ring-primary/30">
                     <Search className="h-6 w-6 text-primary" />
@@ -105,8 +137,10 @@ export default function AboutPage() {
                   ))}
                 </div>
               </Card>
+              </motion.div>
 
-              <Card className="p-4 sm:p-5 lg:p-6 hover:shadow-lg transition-shadow">
+              <motion.div variants={cardVariant}>
+                <Card className="p-4 sm:p-5 lg:p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-start gap-4 mb-1 sm:mb-2 min-h-14 sm:min-h-16 lg:min-h-18">
                   <div className="h-12 w-12 min-w-12 rounded-xl bg-primary/20 flex items-center justify-center ring-2 ring-primary/30">
                     <Calendar className="h-6 w-6 text-primary" />
@@ -133,7 +167,9 @@ export default function AboutPage() {
                   </div>
                 </div>
               </Card>
+              </motion.div>
 
+              <motion.div variants={cardVariant}>
               <Card className="p-4 sm:p-5 lg:p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-start gap-4 mb-1 sm:mb-2 min-h-14 sm:min-h-16 lg:min-h-18">
                   <div className="h-12 w-12 min-w-12 rounded-xl bg-primary/20 flex items-center justify-center ring-2 ring-primary/30">
@@ -161,7 +197,9 @@ export default function AboutPage() {
                   </div>
                 </div>
               </Card>
+              </motion.div>
 
+              <motion.div variants={cardVariant}>
               <Card className="p-4 sm:p-5 lg:p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-start gap-4 mb-1 sm:mb-2 min-h-14 sm:min-h-16 lg:min-h-18">
                   <div className="h-12 w-12 min-w-12 rounded-xl bg-primary/20 flex items-center justify-center ring-2 ring-primary/30">
@@ -189,7 +227,9 @@ export default function AboutPage() {
                   </div>
                 </div>
               </Card>
+              </motion.div>
 
+              <motion.div variants={cardVariant}>
               <Card className="p-4 sm:p-5 lg:p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-start gap-4 mb-1 sm:mb-2 min-h-14 sm:min-h-16 lg:min-h-18">
                   <div className="h-12 w-12 min-w-12 rounded-xl bg-primary/20 flex items-center justify-center ring-2 ring-primary/30">
@@ -217,20 +257,33 @@ export default function AboutPage() {
                   </div>
                 </div>
               </Card>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
         {/* Team Section */}
-        <div className="max-w-5xl mx-auto">
+        <motion.div 
+          className="max-w-5xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2, margin: "0px 0px -100px 0px" }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 md:mb-10">
             Meet the Team
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: false, amount: 0.2, margin: "0px 0px -100px 0px" }}
+            variants={staggerContainer}
+          >
             {team.map((member) => (
+              <motion.div key={member.name} variants={cardVariant}>
               <Card
-                key={member.name}
                 className="p-5 sm:p-6 hover:shadow-lg transition-all"
               >
                 <div className="flex items-start gap-3 sm:gap-4 mb-4">
@@ -280,9 +333,10 @@ export default function AboutPage() {
                   </Button>
                 </div>
               </Card>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
 
       <Footer />

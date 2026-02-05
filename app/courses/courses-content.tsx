@@ -1,5 +1,6 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -24,6 +25,26 @@ import {
 } from "@/lib/api/courses"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+
+// Animation variants
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 },
+}
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.08,
+    },
+  },
+}
+
+const cardVariant = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+}
 
 // Map UI faculty IDs to API faculty codes
 const FACULTY_CODE_MAP: Record<string, string> = {
@@ -277,7 +298,13 @@ export default function CoursesContent() {
       <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8">
         <div className="max-w-7xl mx-auto">
           {/* Page Header */}
-          <div className="mb-6 sm:mb-8">
+          <motion.div 
+            className="mb-6 sm:mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-50px 0px -10px 0px" }}
+            transition={{ duration: 0.5 }}
+          >
             <Link
               href="/"
               className="text-xs sm:text-sm text-muted-foreground hover:text-foreground mb-2 sm:mb-4 inline-block"
@@ -302,13 +329,19 @@ export default function CoursesContent() {
                 Debug: Faculty={selectedFaculty}, Level={selectedCourseLevel.join(",")}, Page={currentPage}
               </div>
             )} */}
-          </div>
+          </motion.div>
 
           <div className="flex gap-4 lg:gap-8">
             {/* Main Content - Left Side */}
             <div className="flex-1 min-w-0">
               {/* Search + Mobile Filter Button */}
-              <div className="mb-6 flex gap-2 sm:gap-3">
+              <motion.div 
+                className="mb-6 flex gap-2 sm:gap-3"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, margin: "-50px 0px -10px 0px" }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
                 <div className="relative flex-1">
                   <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-4 sm:h-5 w-4 sm:w-5 text-muted-foreground" />
                   <Input
@@ -340,7 +373,7 @@ export default function CoursesContent() {
                 >
                   <SlidersHorizontal className="h-4 w-4" />
                 </Button>
-              </div>
+              </motion.div>
 
               {/* Mobile Filter Panel */}
               {isMobileFilterOpen && (
@@ -450,13 +483,19 @@ export default function CoursesContent() {
                   </div>
                 </Card>
               ) : (
-                <div className="flex flex-col gap-4 sm:gap-6 mb-8">
+                <motion.div 
+                  className="flex flex-col gap-4 sm:gap-6 mb-8"
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: false, margin: "-50px 0px -10px 0px" }}
+                  variants={staggerContainer}
+                >
                   {courses.map((course, index) => {
                     const courseCode = formatCode(course.code)
                     const uniqueKey = `${course.id || course.code}-${course.term || ""}-${index}`
                     return (
+                      <motion.div key={uniqueKey} variants={cardVariant}>
                       <Link
-                        key={uniqueKey}
                         href={`/course/${course.code?.replace(/\s+/g, "").toLowerCase()}`}
                       >
                         <Card className="p-4 sm:p-6 hover:shadow-md transition-all hover:border-primary/50 cursor-pointer group">
@@ -503,14 +542,21 @@ export default function CoursesContent() {
                           </div>
                         </Card>
                       </Link>
+                      </motion.div>
                     )
                   })}
-                </div>
+                </motion.div>
               )}
 
               {/* Pagination */}
               {!isLoading && !error && !isSearchMode && totalPages > 1 && (
-                <div className="flex items-center justify-center gap-1 sm:gap-2 flex-wrap">
+                <motion.div 
+                  className="flex items-center justify-center gap-1 sm:gap-2 flex-wrap"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, margin: "-50px 0px -10px 0px" }}
+                  transition={{ duration: 0.5 }}
+                >
                   <Button
                     variant="outline"
                     size="sm"
@@ -556,12 +602,18 @@ export default function CoursesContent() {
                   >
                     <ChevronRight className="h-4 w-4" />
                   </Button>
-                </div>
+                </motion.div>
               )}
             </div>
 
             <aside className="hidden lg:block w-80 shrink-0">
               <div className="sticky top-24">
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: false, margin: "-50px 0px -10px 0px" }}
+                  transition={{ duration: 0.6 }}
+                >
                 <Card className="p-4 sm:p-6">
                   <h2 className="font-semibold text-base sm:text-lg mb-4 sm:mb-6">
                     Filter your results
@@ -636,6 +688,7 @@ export default function CoursesContent() {
                     </Button>
                   )}
                 </Card>
+                </motion.div>
               </div>
             </aside>
           </div>
