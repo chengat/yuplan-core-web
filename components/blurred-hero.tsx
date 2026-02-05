@@ -39,7 +39,7 @@ export function BlurredHero({
   priority = true,
 }: BlurredHeroProps) {
   return (
-    <section className={cn("relative isolate", className)}>
+    <section className={cn("relative isolate aspect-21/9", className)}>
       {/* Background is clipped, content can overflow (search dropdown) */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <Image
