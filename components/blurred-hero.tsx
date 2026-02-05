@@ -57,7 +57,7 @@ export function BlurredHero({
         <div
           className={cn(
             // Combined overlay: contrast and fade in one layer
-            "absolute inset-0 bg-linear-to-b from-black/10 via-black/10 to-background",
+            "absolute inset-0 bg-linear-to-b from-black/5 via-black/10 to-background",
             contrastOverlayClassName,
             fadeClassName,
           )}
