@@ -57,22 +57,10 @@ export function BlurredHero({
         />
         <div
           className={cn(
-            // warm/red tint overlay like the screenshots
-            "absolute inset-0 bg-primary/20 mix-blend-multiply",
+            // Combined overlay: tint, contrast, and fade in one layer
+            "absolute inset-0 bg-linear-to-b from-primary/20 via-black/10 to-background",
             tintClassName,
-          )}
-        />
-        <div
-          className={cn(
-            // subtle dark wash for readability
-            "absolute inset-0 bg-black/20",
             contrastOverlayClassName,
-          )}
-        />
-        <div
-          className={cn(
-            // fade to the page background so it blends nicely
-            "absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-background",
             fadeClassName,
           )}
         />
