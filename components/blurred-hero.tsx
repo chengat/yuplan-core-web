@@ -46,7 +46,6 @@ export function BlurredHero({
           alt={imageAlt}
           fill
           priority={priority}
-          sizes="100vw"
           decoding="async"
           className={cn(
             // scale avoids blur edges showing transparent borders
