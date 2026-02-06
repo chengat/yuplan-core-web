@@ -41,7 +41,7 @@ export function BlurredHero({
   return (
     <section
       className={cn(
-        "relative isolate aspect-square md:aspect-4/3 lg:aspect-21/9",
+        "relative isolate aspect-20/9 md:aspect-4/3 lg:aspect-21/9",
         className,
       )}
     >
