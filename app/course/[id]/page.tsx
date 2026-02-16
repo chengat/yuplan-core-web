@@ -22,6 +22,7 @@ import {
   type Instructor,
   type CourseOffering,
   type ReviewsResponse,
+  type Course,
   getDayName,
   getFacultyName,
   getTypeName,
@@ -77,7 +78,7 @@ export default function CoursePage() {
   const router = useRouter()
   const courseCode = getIDFromParams({ id: params.id as string })
   const [searchQuery, setSearchQuery] = useState("")
-  const [searchResults, setSearchResults] = useState<CourseOffering[]>([])
+  const [searchResults, setSearchResults] = useState<Course[]>([])
   const [isSearchDropdownOpen, setIsSearchDropdownOpen] = useState(false)
   const [isSearchingHeader, setIsSearchingHeader] = useState(false)
   const searchContainerRef = useRef<HTMLDivElement>(null)
@@ -254,7 +255,7 @@ export default function CoursePage() {
       setIsSearchingHeader(true)
       try {
         const results = await coursesApi.searchCourses(searchQuery)
-        const deduped: CourseOffering[] = []
+        const deduped: Course[] = []
         const seen = new Set<string>()
         for (const c of Array.isArray(results) ? results : []) {
           const key = (c.code || "").replace(/\s+/g, "").toUpperCase()
