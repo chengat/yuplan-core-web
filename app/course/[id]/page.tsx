@@ -403,7 +403,7 @@ function CourseHeaderSearchMobile() {
                           </p>
                         </div>
                         <Badge variant="secondary" className="shrink-0 text-xs mt-0.5">
-                          {course.credits}c
+                          {course.credits} credit{course.credits === 1 ? "" : "s"}
                         </Badge>
                       </div>
                     </button>
